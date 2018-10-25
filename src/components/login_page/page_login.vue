@@ -1,0 +1,75 @@
+<template>
+<div class="login">
+    <form class="ui form" @submit.prevent>
+        <div class="field">
+            <label for="">username</label>
+            <input name="username" type="text" v-model="user.username"/>
+        </div>
+        <div class="field">
+            <label for="">password</label>
+            <input type="password" name="password" v-model="user.password"/>
+        </div>
+        <input class="ui button" type="submit" @click="loginfct" value="Login"> <input class="ui button" @click="registerfct" type="submit" value="Register"><input class="ui button" @click="skipfct" type="submit" value="Skip">
+    </form>
+</div>
+</template>
+
+
+
+<script>
+import Vuex from 'vuex'
+
+export default {
+    name:'login',
+    data () {
+        return {
+            user: { username: "", password: ""}
+        }
+    },
+    computed: {
+        // ...Vuex.mapActions([
+        //     'changeUser'
+        // ])
+    },
+    methods: {
+        loginfct () {
+            this.$http.post('auth/jwt/create/', { "username": this.user.username, "password": this.user.password })
+            .then(
+                Response => {
+                    this.user.token = 'jwt ' + JSON.parse(Response.bodyText).token
+                    this.$http.get('auth/users/me/', { headers: {Authorization: this.user.token}}).then( 
+                        Response => { 
+                            this.user.id = JSON.parse(Response.bodyText).id
+                            this.$store.dispatch('changeUser', this.user)
+                            console.log(Response)
+                            this.$router.push("welcome")
+                        }, 
+                        Response => console.log(Response)
+                    )
+                }, 
+                
+                Response => console.log(Response)
+            )
+        },
+
+        registerfct () {
+            this.$http.post('auth/users/create/',  { "username": this.user.username, "password": this.user.password }).then(
+                response => loginfct(), response => console.log(response)
+            )
+        },
+
+        skipfct () {
+            this.$router.push("welcome")
+        }
+    }
+}
+</script>
+
+<style>
+    .login
+    {
+        max-width: 500px;
+        margin: auto
+    }
+</style>
+
