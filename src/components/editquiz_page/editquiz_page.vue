@@ -35,7 +35,7 @@
                 <i class="plus circle icon"></i>add question
             </div>
         </div>
-        <div v-if="quiz.questions.length === 0 " @click="addquestion">
+        <div v-if=" quiz.questions !== undefined && quiz.questions.length === 0 " @click="addquestion">
                 <i class="plus circle icon"></i>add question
         </div>
         <div class="sendform">
@@ -194,6 +194,7 @@ export default {
             )
 
             
+            this.$router.push({name:'admin'})
             
         },
         addanswer(index, bool)

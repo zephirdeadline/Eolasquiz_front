@@ -128,6 +128,7 @@ export default {
                                 Response => console.log('ok!!'),
                                 Response => console.log(Response)
                             )
+                            this.$router.push('admin')
 
                         },
                         Response => console.log(Response)
@@ -147,9 +148,7 @@ export default {
         }
 
     },
-    mounted () {
-        this.$http.get('api/quiz/' + this.$route.params.id, this.headers ).then(Response => { this.quiz = JSON.parse(Response.bodyText)}, console.log(Response))
-    }
+ 
 }
 </script>
 

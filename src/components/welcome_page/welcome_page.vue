@@ -3,9 +3,17 @@
 
     <h1 class="ui center aligned icon header">
         <i class="circular users icon"></i>
-        Quizz Engine
+        Kaestio
     </h1>
-    <div class="quiz">
+    <div>
+        <div class="ui segment" id="loader" v-if="is_loaded">
+            <div class="ui active inverted dimmer">
+                <div class="ui text loader">Loading</div>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div class="quiz" v-if="!is_loaded">
         
         <div class="ui card " id="card" v-for="quiz in quizs" :key="quiz.id">
             <div class="image"> 
@@ -46,7 +54,8 @@ export default {
     data () {
         return {
             quizs: [],
-            headers:{ headers: {Authorization: this.$store.getters.getUser.token}}
+            headers:{ headers: {Authorization: this.$store.getters.getUser.token}},
+            is_loaded: true
         }
     },
     
@@ -71,7 +80,7 @@ export default {
             this.$http.get('api/quiz/', this.headers).then( 
             Response => { 
                 this.quizs = JSON.parse(Response.bodyText) 
-                // this.$store.dispatch('setQuizs', this.quizs)
+                this.is_loaded = false
                 }, 
             Response => console.log(Response))
         }
@@ -93,12 +102,15 @@ export default {
 }
 .quiz {
     display: flex;
-   
+   height: 100%;
 }
 #card {
     margin: 20px;
 }
 h1 {
     text-align: center
+}
+#loader {
+    height: 500px;
 }
 </style>
