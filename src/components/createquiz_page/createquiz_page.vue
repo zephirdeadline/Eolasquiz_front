@@ -1,23 +1,40 @@
 <template>
 <div class="editcontent">
-   
+    
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Modal Title
+        </div>
+        <div class="image content">
+            
+            <div class="description">
+            Error during saving {{currentError}}
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui button" @click="hideModal">Cancel</div>
+            <div class="ui button">OK</div>
+        </div>
+    </div>
+
     <form class="ui form" @submit.prevent id='form'>
-         <h1><input type="text" class="title" name="title" placeholder="Title"/></h1>
-         <label>Category</label><input type="text" name="category" />
-         <label>Description</label><input type="text" name="description" />
-         <label>Difficulty</label><input type="number" name="difficulty" id="metadata" />
+         <h1><input type="text" class="title" name="title" placeholder="Title" required/></h1>
+         <label>Category</label><input type="text" name="category" required/>
+         <label>Description</label><input type="text" name="description" required/>
+         <label>Difficulty</label><input type="number" name="difficulty" id="metadata" min="0"/>
         <div class="field question" v-for="(question, index) in questions" :key="index">
             <div class="field">
                 <button class="ui circular close icon button" @click="closeQuestion(index)"><i class="close icon"></i></button>
                 <label>Question</label>
-                <textarea rows="2" :name="index"></textarea>
+                <textarea rows="2" :name="index" required></textarea>
             </div>
             <hr/>
             <div class="field" v-for="(answer, indexanswer) in question" :key="indexanswer">
               
                 <button class="ui circular close icon button" @click="closeAnswer(index, indexanswer)"><i class="close icon"></i></button>
                 <label>Answers</label> 
-                <input class="ui input" type="text" :name="index+';'+indexanswer"/> 
+                <input class="ui input" type="text" :name="index+';'+indexanswer" required/> 
                 <div class="ui toggle checkbox">
                     
                     <input :name="index+';a'" :value="index+';'+indexanswer" type="radio">
@@ -53,12 +70,15 @@ export default {
         return {
             quiz: {},
             questions: [['','']],
-
+            currentError: "",
 
             headers:{ headers: {Authorization: this.$store.getters.getUser.token}}
         }
     },
     methods: {
+        hideModal () {
+            $('.ui.modal').modal('show');
+        },
         closeAnswer(indexquestion, indexanswer)
         {
             
@@ -71,6 +91,10 @@ export default {
         },
         savequiz ()
         {
+            var form = document.getElementById('form');
+            var isValidForm = form.checkValidity();
+            if (!isValidForm)
+                return 
             var form = document.getElementById('form');
             var formData = new FormData(form);
             var formArray = {}
@@ -125,16 +149,25 @@ export default {
                                 dataToSend.push(currentAnswer)
                             })
                             this.$http.post('api/answer/', dataToSend, this.headers).then(
-                                Response => console.log('ok!!'),
-                                Response => console.log(Response)
+                                Response => this.$router.push('admin'),
+                                Response => {
+                                    this.currentError = JSON.parse(Response.bodyText).fails[0].error
+                                        $('.ui.modal').modal('show');
+                                    }
                             )
-                            this.$router.push('admin')
+                            
 
                         },
-                        Response => console.log(Response)
+                        Response => {
+                            this.currentError = JSON.parse(Response.bodyText).fails[0].error
+                                $('.ui.modal').modal('show');
+                            }
                     )
                 },
-                Response => console.log(Response)
+                Response => {
+                    this.currentError = JSON.parse(Response.bodyText).fails[0].error
+                        $('.ui.modal').modal('show');
+                    }
             )
             
             
