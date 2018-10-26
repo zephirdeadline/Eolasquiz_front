@@ -22,7 +22,7 @@
          <h1><input type="text" class="title" name="title" placeholder="Title" required/></h1>
          <label>Category</label><input type="text" name="category" required/>
          <label>Description</label><input type="text" name="description" required/>
-         <label>Difficulty</label><input type="number" name="difficulty" id="metadata" min="0"/>
+         <label>Difficulty</label><input type="number" name="difficulty" id="metadata" min="0" required/>
         <div class="field question" v-for="(question, index) in questions" :key="index">
             <div class="field">
                 <button class="ui circular close icon button" @click="closeQuestion(index)"><i class="close icon"></i></button>
@@ -89,13 +89,16 @@ export default {
            
             this.$delete(this.questions, indexquestion)
         },
+        errorPostModal () {
+            this.currentError = JSON.parse(Response.bodyText).fails[0].error
+            $('.ui.modal').modal('show');
+        },
         savequiz ()
         {
             var form = document.getElementById('form');
             var isValidForm = form.checkValidity();
             if (!isValidForm)
                 return 
-            var form = document.getElementById('form');
             var formData = new FormData(form);
             var formArray = {}
             formData.forEach(function(value, key){
@@ -150,24 +153,15 @@ export default {
                             })
                             this.$http.post('api/answer/', dataToSend, this.headers).then(
                                 Response => this.$router.push('admin'),
-                                Response => {
-                                    this.currentError = JSON.parse(Response.bodyText).fails[0].error
-                                        $('.ui.modal').modal('show');
-                                    }
+                                Response => this.errorPostModal ()
                             )
                             
 
                         },
-                        Response => {
-                            this.currentError = JSON.parse(Response.bodyText).fails[0].error
-                                $('.ui.modal').modal('show');
-                            }
+                        Response => this.errorPostModal ()
                     )
                 },
-                Response => {
-                    this.currentError = JSON.parse(Response.bodyText).fails[0].error
-                        $('.ui.modal').modal('show');
-                    }
+                Response => this.errorPostModal ()
             )
             
             

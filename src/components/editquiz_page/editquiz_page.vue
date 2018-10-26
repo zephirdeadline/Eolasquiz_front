@@ -1,23 +1,39 @@
 <template>
 <div class="editcontent">
-   
+    <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Modal Title
+        </div>
+        <div class="image content">
+            
+            <div class="description">
+            Error during saving {{currentError}}
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui button" @click="hideModal">Cancel</div>
+            <div class="ui button">OK</div>
+        </div>
+    </div>
+
     <form class="ui form" @submit.prevent id='form'>
-         <h1><input type="text" class="title" name="title" :value="quiz.name"/></h1>
-         <label>Category</label><input type="text" name="category" :value="quiz.category"/>
-         <label>Description</label><input type="text" name="description"  :value="quiz.description"/>
-         <label>Difficulty</label><input type="number" name="difficulty" id="metadata" :value="quiz.difficulty"/>
+         <h1><input type="text" class="title" name="title" :value="quiz.name" required/></h1>
+         <label>Category</label><input type="text" name="category" :value="quiz.category" required/>
+         <label>Description</label><input type="text" name="description"  :value="quiz.description" required/>
+         <label>Difficulty</label><input type="number" name="difficulty" id="metadata" :value="quiz.difficulty" min="0" required/>
         <div class="field question" v-for="(question, index) in quiz.questions" :key="index">
             <div class="field">
                 <button class="ui circular close icon button" @click="closeQuestion(index, question.id)"><i class="close icon"></i></button>
                 <label>Question</label>
-                <textarea rows="2" :name="index+';'+question.id" :value="question.text"></textarea>
+                <textarea rows="2" :name="index+';'+question.id" :value="question.text" required></textarea>
             </div>
             <hr/>
             <div class="field" v-for="(answer, indexanswer) in question.answers" :key="indexanswer">
               
                 <button class="ui circular close icon button" @click="closeAnswer(index, indexanswer, answer.id)"><i class="close icon"></i></button>
                 <label>Answers</label> 
-                <input class="ui input" :name="index+';'+question.id+';'+indexanswer+';'+answer.id" type="text" :value="answer.text"/> 
+                <input class="ui input" :name="index+';'+question.id+';'+indexanswer+';'+answer.id" type="text" :value="answer.text" required/> 
                 <div class="ui toggle checkbox">
                     <input :name="index+'a'" :value="indexanswer" type="radio" v-if="answer.is_correct" checked>
                     <input :name="index+'a'" :value="indexanswer" type="radio" v-else>
@@ -54,11 +70,14 @@ export default {
             quiz: {},
             questionToDelete: [],
             answerToDelete:[],
-
+            currentError: "",
             headers:{ headers: {Authorization: this.$store.getters.getUser.token}}
         }
     },
     methods: {
+        hideModal () {
+            $('.ui.modal').modal('show');
+        },
         closeAnswer(indexquestion, indexanswer, id)
         {
             if (id !== "-1")
@@ -71,9 +90,21 @@ export default {
                 this.questionToDelete.push(id)
             this.$delete(this.quiz.questions, indexquestion)
         },
+        errorModal()
+        {
+            this.currentError = JSON.parse(Response.bodyText)
+            $('.ui.modal').modal('show');
+        },
+        errorPostModal () {
+            this.currentError = JSON.parse(Response.bodyText).fails[0].error
+            $('.ui.modal').modal('show');
+        },
         savequiz()
         {
             var form = document.getElementById('form');
+            var isValidForm = form.checkValidity();
+            if (!isValidForm)
+                return 
             var formData = new FormData(form);
             var formArray = {}
             formData.forEach(function(value, key){
@@ -115,7 +146,9 @@ export default {
                 }
                 this.$http.put('api/question/'+arrayOfKeyValue[1], dataToSend, this.headers).then(
                     Response => Response,
-                    Response => console.log(Response)
+                    Response => {
+                        this.errorModal()
+                    }
                 )
             }, this)
 
@@ -147,11 +180,13 @@ export default {
                         }, this)
                         this.$http.post('api/answer/', dataToSend, this.headers).then(
                                 Response => Response,
-                                Response => console.log(Response)
+                                Response => this.errorPostModal()
                             )
                         
                     },
-                    Response => console.log(Response)
+                    Response => {
+                        this.errorPostModal()
+                    }
                 )
 
             answerToUpdate.forEach((key) => {
@@ -164,7 +199,9 @@ export default {
                 
                 this.$http.put('api/answer/'+arrayOfKeyValue[3], dataToSend, this.headers ).then(
                     Response => Response,
-                    Response => console.log(Response)
+                    Response => {
+                        this.errorModal()
+                    }
                 )
             }, this)
 
@@ -172,13 +209,15 @@ export default {
             this.answerToDelete.forEach((a) => {
                 this.$http.delete('api/answer/'+a, this.headers).then(
                     Response => {console.log(Response); this.answerToDelete = []},
-                    Response => console.log(Response)
+                    Response => {
+                        this.errorModal()
+                    }
                 )
             })
             this.questionToDelete.forEach((a) => {
                 this.$http.delete('api/question/'+a, this.headers).then(
                     Response => {console.log(Response); this.questionToDelete = []},
-                    Response => console.log(Response)
+                    Response => this.errorModal()
                 )
             })
             
@@ -190,7 +229,7 @@ export default {
             }
             this.$http.put('api/quiz/'+this.quiz.id, dataToSend, this.headers).then(
                 Response => Response,
-                Response => console.log(Response)
+                Response => this.errorModal()
             )
 
             
