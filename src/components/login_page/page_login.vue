@@ -27,9 +27,6 @@ export default {
         }
     },
     computed: {
-        // ...Vuex.mapActions([
-        //     'changeUser'
-        // ])
     },
     methods: {
         loginfct () {
@@ -40,6 +37,7 @@ export default {
                     this.$http.get('auth/users/me/', { headers: {Authorization: this.user.token}}).then( 
                         Response => { 
                             this.user.id = JSON.parse(Response.bodyText).id
+                            delete this.user.password
                             this.$store.dispatch('changeUser', this.user)
                             console.log(Response)
                             this.$router.push("welcome")
