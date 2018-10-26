@@ -52,7 +52,7 @@ export default {
 
         registerfct () {
             this.$http.post('auth/users/create/',  { "username": this.user.username, "password": this.user.password }).then(
-                response => loginfct(), response => console.log(response)
+                response => this.loginfct(), response => console.log(response)
             )
         },
 

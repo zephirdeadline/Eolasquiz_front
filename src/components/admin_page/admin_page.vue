@@ -46,7 +46,7 @@ export default {
 
     mounted() {
         
-        this.$http.get('api/quiz/', this.headers).then( 
+        this.$http.get('api/quiz/admin/', this.headers).then( 
         Response => { 
             this.quizs = JSON.parse(Response.bodyText) 
             }, 

@@ -10,7 +10,7 @@
             </router-link>
            
             <div class="right menu">
-                <a class="ui item">
+                <a class="ui item" @click="logout">
                 Logout
                 </a>
             </div>
@@ -27,5 +27,13 @@
 <script>
 export default { 
   store: require('../store').default,
-}
+
+  methods: {
+      logout(){
+          window.localStorage.clear()
+          this.$router.push('/')
+      }
+  }
+  
+  }
 </script>
