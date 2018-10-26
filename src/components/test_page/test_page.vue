@@ -52,8 +52,7 @@ export default {
     },
     data () {
         return {
-            quiz: JSON.parse(JSON.stringify(this.$store.getters.getQuiz)),
-            quizConfig: this.$store.getters.getQuizConfig,
+            quiz: {},
             displayScore: false,
             currentQuestion: 0,
             currentIndex: 0,
@@ -64,9 +63,16 @@ export default {
     },
 
     mounted () {
-        var questions = this.quiz.questions.sort(() => { return 0.5 - Math.random() });
-        this.quiz.questions = questions.slice(0, this.quizConfig.nb_question)
-        this.currentQuestion = questions[0].id
+        this.$http.get("api/quiz/"+ this.$route.params.id).then(
+            Response => {
+                this.quiz = JSON.parse(Response.bodyText)
+                var questions = this.quiz.questions.sort(() => { return 0.5 - Math.random() });
+                this.quiz.questions = questions.slice(0, this.$route.params.nbquestion)
+                this.currentQuestion = questions[0].id
+            },
+            Response => console.log(Response)
+        )
+        
     },
 
     computed: {

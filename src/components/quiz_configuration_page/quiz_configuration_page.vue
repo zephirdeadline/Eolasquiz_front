@@ -43,7 +43,6 @@ export default {
         return {
             quiz: {},
             nb_question: 10,
-
             headers:{ headers: {Authorization: this.$store.getters.getUser.token}}
         }
     },
@@ -54,10 +53,7 @@ export default {
         },
 
         runtest() {
-            var config_quiz = {"nb_question": this.nb_question}
-
-            this.$store.dispatch('setQuizConfig', config_quiz)
-            this.$router.push("/test")
+            this.$router.push({name: "test", params: {id: this.quiz.id, nbquestion: this.nb_question}})
         }
     },
     
