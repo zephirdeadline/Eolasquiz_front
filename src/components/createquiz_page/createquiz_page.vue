@@ -147,7 +147,9 @@ export default {
                                 var currentAnswer = {
                                     "text": formData.get(key),
                                     "is_correct": (formData.get(key[0]+";a") === key) ? true : false,
-                                    "question": listQuestionSaved.find((q) => { return q.text === formData.get(tabKey[0])}).id
+                                    "question": listQuestionSaved.find((q) => { 
+                                        console.log(q.text+"      "+formData.get(tabKey[0]))
+                                        return q.text === formData.get(tabKey[0])}).id
                                 }
                                 dataToSend.push(currentAnswer)
                             })
