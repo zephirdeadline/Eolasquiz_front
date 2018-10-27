@@ -104,67 +104,47 @@ export default {
             formData.forEach(function(value, key){
                 formArray[key] = value
             });
-            var questionToAdd = []
-            var answersToAdd = []
+            var quiz = {}
+            quiz["name"] = formData.get("title"),
+            quiz["category"] = formData.get('category'),
+            quiz["difficulty"] = formData.get('difficulty'),
+            quiz["description"] = formData.get('description')
+            
 
+            var questionToAdd = []
             Object.entries(formArray).forEach(([key, value]) => {
                 var arrayOfKeyValue = key.split(';')
                  
                 if (arrayOfKeyValue.length === 1){
                     questionToAdd.push(key)
                 }
-                else if( arrayOfKeyValue.length === 2 && arrayOfKeyValue[1] !== 'a'){
-                    answersToAdd.push(key)
-                }
+                
             })
             questionToAdd = questionToAdd.filter((q) => q !== 'category' && q !==  'title' && q !== 'difficulty' && q !== 'description')
 
-            var quizToSend = {
-                "name": formData.get("title"),
-                "category": formData.get('category'),
-                "difficulty": formData.get('difficulty'),
-                "description": formData.get('description')
-            }
-            this.$http.post('api/quiz/', [quizToSend], this.headers).then(
-                Response => {
-                    var quizId = JSON.parse(Response.bodyText).saved[0].id
-                    var dataToSend = []
-                    questionToAdd.forEach((key) => {
-                        var currentQuestion = {
-                            "text": formData.get(key),
-                            "quiz": quizId
-                        }
-                        dataToSend.push(currentQuestion)
+            var questions = []
+            questionToAdd.forEach((key) => {
+                var answersKey = Object.entries(formArray).filter(([keyAnswer, keyValue]) => keyAnswer.match(new RegExp(key+";\\d", 'g')))
+                var answers = []
+                answersKey.forEach(k => {
+                    console.log(formArray[key+';a']+"         "+k[0]+';a')
+                    answers.push({ text: k[1], is_correct: (formArray[key+';a'] === k[0]) ? true : false })
+                    
+                })
+                var currentQuestion = {
+                    text: formData.get(key),
+                    answers: answers
+                }
+                questions.push(currentQuestion)
 
-                    })
-                    this.$http.post('api/question/', dataToSend, this.headers).then(
-                        Response => {
-                            var listQuestionSaved = JSON.parse(Response.bodyText).saved
-                            var dataToSend = []
-                            answersToAdd.forEach((key) => {
-                                var tabKey = key.split(';')
-                                console.log(formData.get(key[0]+";a")+ "        "+ key)
-                                var currentAnswer = {
-                                    "text": formData.get(key),
-                                    "is_correct": (formData.get(key[0]+";a") === key) ? true : false,
-                                    "question": listQuestionSaved.find((q) => { 
-                                        console.log(q.text+"      "+formData.get(tabKey[0]))
-                                        return q.text === formData.get(tabKey[0])}).id
-                                }
-                                dataToSend.push(currentAnswer)
-                            })
-                            this.$http.post('api/answer/', dataToSend, this.headers).then(
-                                Response => this.$router.push('admin'),
-                                Response => this.errorPostModal ()
-                            )
-                            
-
-                        },
-                        Response => this.errorPostModal ()
-                    )
-                },
-                Response => this.errorPostModal ()
+            })
+            quiz["questions"] = questions
+            console.log(quiz)
+            this.$http.post('api/fullquiz/', [quiz], this.headers).then(
+                Response => this.$router.push({name: 'admin'}),
+                Response => console.log(Response)
             )
+                   
             
             
         },
