@@ -24,19 +24,19 @@
          <label>Difficulty</label><input type="number" name="difficulty" id="metadata" :value="quiz.difficulty" min="0" required/>
         <div class="field question" v-for="(question, index) in quiz.questions" :key="index">
             <div class="field">
-                <button class="ui circular close icon button" @click="closeQuestion(index, question.id)"><i class="close icon"></i></button>
+                <button class="ui circular close icon button" @click="closeQuestion(index)"><i class="close icon"></i></button>
                 <label>Question</label>
-                <textarea rows="2" :name="index+';'+question.id" :value="question.text" required></textarea>
+                <textarea rows="2" :name="index" :value="question.text" required></textarea>
             </div>
             <hr/>
             <div class="field" v-for="(answer, indexanswer) in question.answers" :key="indexanswer">
               
-                <button class="ui circular close icon button" @click="closeAnswer(index, indexanswer, answer.id)"><i class="close icon"></i></button>
+                <button class="ui circular close icon button" @click="closeAnswer(index, indexanswer)"><i class="close icon"></i></button>
                 <label>Answers</label> 
-                <input class="ui input" :name="index+';'+question.id+';'+indexanswer+';'+answer.id" type="text" :value="answer.text" required/> 
+                <input class="ui input" :name="index+';'+indexanswer" type="text" :value="answer.text" required/> 
                 <div class="ui toggle checkbox">
-                    <input :name="index+'a'" :value="indexanswer" type="radio" v-if="answer.is_correct" checked>
-                    <input :name="index+'a'" :value="indexanswer" type="radio" v-else>
+                    <input :name="index+';a'" :value="index+';'+indexanswer" type="radio" v-if="answer.is_correct" checked>
+                    <input :name="index+';a'" :value="index+';'+indexanswer" type="radio" v-else>
                     <label>is correct</label>
                 </div>
                 <div v-if="indexanswer === question.answers.length - 1 " @click="addanswer(index, false)">
@@ -78,16 +78,14 @@ export default {
         hideModal () {
             $('.ui.modal').modal('show');
         },
-        closeAnswer(indexquestion, indexanswer, id)
+        closeAnswer(indexquestion, indexanswer)
         {
-            if (id !== "-1")
-                this.answerToDelete.push(id)
-            this.$delete(this.quiz.questions[indexquestion].answers,indexanswer)
+           
+            this.$delete(this.quiz.questions[indexquestion].answers, indexanswer)
         },
-        closeQuestion(indexquestion, id)
+        closeQuestion(indexquestion)
         {
-            if (id !== "-1")
-                this.questionToDelete.push(id)
+         
             this.$delete(this.quiz.questions, indexquestion)
         },
         errorModal()
@@ -110,130 +108,48 @@ export default {
             formData.forEach(function(value, key){
                 formArray[key] = value
             });
-            console.log(formArray)
 
-            var questionToUpdate = []
+            var quiz = {}
+            quiz["name"] = formData.get("title"),
+            quiz["category"] = formData.get('category'),
+            quiz["difficulty"] = formData.get('difficulty'),
+            quiz["description"] = formData.get('description')
+            
             var questionToAdd = []
-            var answerToUpdate = []
-            var answerToAdd = []
-
             Object.entries(formArray).forEach(([key, value]) => {
-                 var arrayOfKeyValue = key.split(';')
+                var arrayOfKeyValue = key.split(';')
                  
-                if (arrayOfKeyValue.length === 2){
-                    if (arrayOfKeyValue[1] == -1){
-                        questionToAdd.push(key)
-                    }
-                    else {
-                        questionToUpdate.push(key)
-                    }
-                }
-                else if( arrayOfKeyValue.length === 4){
-                    if (arrayOfKeyValue[3] == -1){
-                        answerToAdd.push(key)
-                    }
-                    else {
-                        answerToUpdate.push(key)
-                    }
-                }
-            })
-            questionToUpdate.forEach((key) => {
-                var arrayOfKeyValue = key.split(';')
-                var dataToSend = {
-                    "text": formArray[key],
-	                "quiz": this.quiz.id
-                    
-                }
-                this.$http.put('api/question/'+arrayOfKeyValue[1], dataToSend, this.headers).then(
-                    Response => Response,
-                    Response => {
-                        this.errorModal()
-                    }
-                )
-            }, this)
-
-            var dataToSend = []
-            questionToAdd.forEach((key) => {
-                var arrayOfKeyValue = key.split(';')
-                var currentQuestion = {
-                    "text": formArray[key],
-	                "quiz": this.quiz.id
-                    
-                }
-                dataToSend.push(currentQuestion)
-            }, this)
-
-            this.$http.post('api/question/', dataToSend, this.headers).then(
-                    Response => {
-                        var newquestions = JSON.parse(Response.bodyText).saved
-                       
-                        var dataToSend = []
-                        answerToAdd.forEach((key) => {
-                            var arrayOfKeyValue = key.split(';')
-                            console.log(formArray[arrayOfKeyValue[0]+";"+arrayOfKeyValue[1]])
-                            var currentAnswer = {
-                                "text": formArray[key],
-                                "is_correct": (formData.get(arrayOfKeyValue[0]+'a') === arrayOfKeyValue[2]) ? true : false,
-                                "question": (arrayOfKeyValue[1] === '-1') ? newquestions.find((q) => q.text === formArray[arrayOfKeyValue[0]+";"+arrayOfKeyValue[1]]).id : arrayOfKeyValue[1]
-                            }
-                            dataToSend.push(currentAnswer)
-                        }, this)
-                        this.$http.post('api/answer/', dataToSend, this.headers).then(
-                                Response => Response,
-                                Response => this.errorPostModal()
-                            )
-                        
-                    },
-                    Response => {
-                        this.errorPostModal()
-                    }
-                )
-
-            answerToUpdate.forEach((key) => {
-                var arrayOfKeyValue = key.split(';')
-                var dataToSend = {
-                    "text": formArray[key],
-                    "is_correct": (formData.get(arrayOfKeyValue[0]+'a') === arrayOfKeyValue[2]) ? true : false,
-                    "question": arrayOfKeyValue[1]
+                if (arrayOfKeyValue.length === 1){
+                    questionToAdd.push(key)
                 }
                 
-                this.$http.put('api/answer/'+arrayOfKeyValue[3], dataToSend, this.headers ).then(
-                    Response => Response,
-                    Response => {
-                        this.errorModal()
-                    }
-                )
-            }, this)
-
-
-            this.answerToDelete.forEach((a) => {
-                this.$http.delete('api/answer/'+a, this.headers).then(
-                    Response => {console.log(Response); this.answerToDelete = []},
-                    Response => {
-                        this.errorModal()
-                    }
-                )
             })
-            this.questionToDelete.forEach((a) => {
-                this.$http.delete('api/question/'+a, this.headers).then(
-                    Response => {console.log(Response); this.questionToDelete = []},
-                    Response => this.errorModal()
-                )
+            questionToAdd = questionToAdd.filter((q) => q !== 'category' && q !==  'title' && q !== 'difficulty' && q !== 'description')
+
+            var questions = []
+            questionToAdd.forEach((key) => {
+                var answersKey = Object.entries(formArray).filter(([keyAnswer, keyValue]) => keyAnswer.match(new RegExp(key+";\\d", 'g')))
+                var answers = []
+                answersKey.forEach(k => {
+                    console.log(key+';a')
+                    console.log(formArray[key+';a']+"         "+k[0]+';a')
+                    answers.push({ text: k[1], is_correct: (formArray[key+';a'] === k[0]) ? true : false })
+                    
+                })
+                var currentQuestion = {
+                    text: formData.get(key),
+                    answers: answers
+                }
+                questions.push(currentQuestion)
+
             })
-            
-            var dataToSend = {
-                    "name": formData.get("title"),
-                    "category": formData.get('category'),
-                    "difficulty": formData.get('difficulty'),
-                    "description": formData.get('description')
-            }
-            this.$http.put('api/quiz/'+this.quiz.id, dataToSend, this.headers).then(
-                Response => Response,
-                Response => this.errorModal()
+            quiz["questions"] = questions
+            console.log(quiz)
+            this.$http.put('api/fullquiz/'+this.$route.params.id, quiz, this.headers).then(
+                Response =>  console.log(Response),
+                Response => console.log(Response)
             )
 
-            
-            this.$router.push({name:'admin'})
             
         },
         addanswer(index, bool)
@@ -251,6 +167,8 @@ export default {
         this.$http.get('api/quiz/' + this.$route.params.id, this.headers ).then(Response => { this.quiz = JSON.parse(Response.bodyText)}, console.log(Response))
     }
 }
+
+
 </script>
 
 <style>
