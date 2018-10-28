@@ -29,7 +29,7 @@
             </div>
         </form>
         <div v-else class="displayresult">
-            <h3>Felicitation!</h3>
+            <h3>Félicitations!</h3>
             <h3>Tu as obtenu un score de:</h3>
             <h2>{{ result.score }}/20</h2>
             <p style="color: black">Voici la correction de tes erreurs:</p>
@@ -70,7 +70,7 @@ export default {
                 this.quiz.questions = questions.slice(0, this.$route.params.nbquestion)
                 this.currentQuestion = questions[0].id
             },
-            Response => console.log(Response)
+            Response => Response
         )
         
     },
@@ -112,8 +112,13 @@ export default {
                 formArray[key] = value
             });
             var badAnswers = []
+            var listIdQuestion = []
+            this.quiz.questions.forEach(question => {
+                listIdQuestion.push(question.id)
+            });
             Object.entries(formArray).forEach(([key, value]) => {
                     var quest = this.quiz.questions.find((q) => q.id.toString() === key )
+                    delete listIdQuestion[listIdQuestion.findIndex( id => id === quest.id)]
                     var idGoodAnswer = quest.answers.find((answer) => answer.is_correct === true)
                     if (value !== idGoodAnswer.id.toString())
                     {   
@@ -122,8 +127,14 @@ export default {
                     
                 }
             )
+            listIdQuestion.forEach(idQuestion => {
+                var question = this.quiz.questions.find(e => e.id === idQuestion)
+                var answer = question.answers.find(e => e.is_correct)
+                badAnswers.push(question.text + " est " + answer.text)
+            });
+            
             this.result.badAnswers = badAnswers
-            this.result.score = (this.quiz.questions.length - badAnswers.length - (this.quiz.questions.length - Object.values(formArray).length)) * 20 / this.quiz.questions.length
+            this.result.score = (this.quiz.questions.length - badAnswers.length /*- (this.quiz.questions.length - Object.values(formArray).length)*/) * 20 / this.quiz.questions.length
         
         }
     }

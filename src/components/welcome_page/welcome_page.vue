@@ -65,10 +65,10 @@ export default {
 
     methods: {
         Like (id) {
-            this.$http.post('api/like/', [{ "quiz": id }], this.headers).then(this.getQuizs, Response => console.log(Response))
+            this.$http.post('api/like/', [{ "quiz": id }], this.headers).then(this.getQuizs, Response => Response)
         },
         Dislike (id) {
-            this.$http.post('api/dislike/', [{ quiz: id }], this.headers).then(this.getQuizs, Response => console.log(Response))
+            this.$http.post('api/dislike/', [{ quiz: id }], this.headers).then(this.getQuizs, Response => Response)
         },
         isUserLikeQuiz (quiz) {
             return quiz.likes.find(like => like.user === this.$store.getters.getUser.id )
@@ -82,7 +82,7 @@ export default {
                 this.quizs = JSON.parse(Response.bodyText) 
                 this.is_loaded = false
                 }, 
-            Response => console.log(Response))
+            Response => Response)
         }
     },
 

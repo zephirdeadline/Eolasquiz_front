@@ -14,8 +14,6 @@ export default {
         $("#example2").progress({
             percent: this.progress
         });
-        
-            console.log(this.progress)   
         }
     },
     watch:{

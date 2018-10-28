@@ -49,7 +49,7 @@ export default {
 
     methods:{
         getQuizFromServer(id) {
-             this.$http.get('api/quiz/' + id, this.headers).then(Response => this.quiz = JSON.parse(Response.bodyText), console.log(Response))
+             this.$http.get('api/quiz/' + id, this.headers).then(Response => this.quiz = JSON.parse(Response.bodyText), Response)
         },
 
         runtest() {

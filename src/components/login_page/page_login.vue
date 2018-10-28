@@ -39,20 +39,19 @@ export default {
                             this.user.id = JSON.parse(Response.bodyText).id
                             delete this.user.password
                             this.$store.dispatch('changeUser', this.user)
-                            console.log(Response)
                             this.$router.push("welcome")
                         }, 
-                        Response => console.log(Response)
+                        Response => Response
                     )
                 }, 
                 
-                Response => console.log(Response)
+                Response => Response
             )
         },
 
         registerfct () {
             this.$http.post('auth/users/create/',  { "username": this.user.username, "password": this.user.password }).then(
-                response => this.loginfct(), response => console.log(response)
+                response => this.loginfct(), response => response
             )
         },
 

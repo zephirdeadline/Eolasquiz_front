@@ -27,6 +27,10 @@
                     
                         <div class="ui label "><i class="thumbs down icon">{{quiz.dislikes.length }}</i></div>
                     </div>
+                    <router-link :to="{name: 'quiz', params: {id: quiz.id}}" class="ui green basic button">
+                        Run!
+                        <i class="right chevron icon"></i>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -50,7 +54,7 @@ export default {
         Response => { 
             this.quizs = JSON.parse(Response.bodyText) 
             }, 
-        Response => console.log(Response))
+        Response => Response)
     
     },
     methods: {
@@ -60,10 +64,10 @@ export default {
         deleteQuiz(id) {
             this.$http.delete('api/quiz/'+id, this.headers).then(
                 Response => {
-                    console.log(Response)
+                   
                     this.quizs = this.quizs.filter((quiz) => quiz.id !== id)
                 },
-                Response => console.log(Response)
+                Response => Response
             )
         }
     }

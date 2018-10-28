@@ -127,7 +127,6 @@ export default {
                 var answersKey = Object.entries(formArray).filter(([keyAnswer, keyValue]) => keyAnswer.match(new RegExp(key+";\\d", 'g')))
                 var answers = []
                 answersKey.forEach(k => {
-                    console.log(formArray[key+';a']+"         "+k[0]+';a')
                     answers.push({ text: k[1], is_correct: (formArray[key+';a'] === k[0]) ? true : false })
                     
                 })
@@ -139,10 +138,9 @@ export default {
 
             })
             quiz["questions"] = questions
-            console.log(quiz)
             this.$http.post('api/fullquiz/', [quiz], this.headers).then(
                 Response => this.$router.push({name: 'admin'}),
-                Response => console.log(Response)
+                Response => Response
             )
                    
             
