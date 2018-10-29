@@ -1,5 +1,20 @@
 <template>
     <div class="content">
+        <div class="ui modal">
+        <i class="close icon"></i>
+        <div class="header">
+            Warning
+        </div>
+        <div class="image content">
+            
+            <div class="description">
+            This quiz instance is already done
+            </div>
+        </div>
+        <div class="actions">
+            <div class="ui button" @click="changeQuiz">Give me another!</div>
+        </div>
+    </div>
         <form class='ui form' @submit.prevent="viewscore" v-if="!displayScore" id="form">
             <h1>{{quiz.name}}</h1>
 
@@ -36,6 +51,7 @@
             <div v-for="answer in result.badAnswers" :key="answer.id" class="correction">
                 {{answer}}
             </div>
+            <p v-if="resultSaved">Result available to : {{uniqId}}</p>
         </div>
  
     </div>
@@ -45,6 +61,8 @@
 
 <script>
 import Progressbar from '../progressbar'
+import uniqid from 'uniqid'
+
 export default {
     name: 'test',
     components:{
@@ -57,12 +75,26 @@ export default {
             currentQuestion: 0,
             currentIndex: 0,
             displayEnd: false,
+            headers: { headers: {Authorization: this.$store.getters.getUser.token}},
             result: {},
-            progress: 0
+            progress: 0,
+            uniqId: "",
+            status: "Ready",
+            resultSaved: false
         }
     },
 
     mounted () {
+        if (this.$route.params.uniqid === undefined)
+            this.uniqId = uniqid()
+        else
+            this.uniqId = this.$route.params.uniqid
+
+        console.log(this.uniqId)
+        this.$http.get('api/result/'+this.uniqId).then(
+            Response => $('.ui.modal').modal('show'),
+            Response => console.log(Response)
+        )
         this.$http.get("api/quiz/"+ this.$route.params.id).then(
             Response => {
                 this.quiz = JSON.parse(Response.bodyText)
@@ -72,6 +104,8 @@ export default {
             },
             Response => Response
         )
+
+        
         
     },
 
@@ -82,7 +116,17 @@ export default {
     },
 
     methods: {
-         isVisible (id) {
+        changeQuiz () {
+            console.log('click')
+            this.hideModal()
+            this.uniqId = uniqid()
+        },
+
+        hideModal () {
+            $('.ui.modal').modal('hide');
+        },
+        
+        isVisible (id) {
             if (id === this.currentQuestion)
                 return 'active'
             else
@@ -135,7 +179,12 @@ export default {
             
             this.result.badAnswers = badAnswers
             this.result.score = (this.quiz.questions.length - badAnswers.length /*- (this.quiz.questions.length - Object.values(formArray).length)*/) * 20 / this.quiz.questions.length
-        
+            
+            this.$http.post('api/result/', [{score: this.result.score, quiz: this.quiz.id, uniq_id: this.uniqId}]).then(
+                Response => this.resultSaved = true,
+                Response => console.log(Response)   
+            )
+              
         }
     }
 }
@@ -160,3 +209,4 @@ h1 {
      color: black;
  }
 </style>
+[…]

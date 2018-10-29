@@ -23,12 +23,18 @@
                             Update
                             <i class="right chevron icon"></i>
                         </div>
+                       
                         <div class="ui label "><i class="like icon">{{quiz.likes.length }}</i></div>
                     
                         <div class="ui label "><i class="thumbs down icon">{{quiz.dislikes.length }}</i></div>
+                        
                     </div>
                     <router-link :to="{name: 'quiz', params: {id: quiz.id}}" class="ui green basic button">
                         Run!
+                        <i class="right chevron icon"></i>
+                    </router-link> 
+                    <router-link :to="TODO" class="ui  right floated  brown basic button" @click="editquiz(quiz.id)">
+                            View results
                         <i class="right chevron icon"></i>
                     </router-link>
                 </div>

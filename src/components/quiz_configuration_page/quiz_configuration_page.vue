@@ -53,7 +53,8 @@ export default {
         },
 
         runtest() {
-            this.$router.push({name: "test", params: {id: this.quiz.id, nbquestion: this.nb_question}})
+            var uniqid = require('uniqid')
+            this.$router.push({name: "autotest", params: {id: this.quiz.id, nbquestion: this.nb_question }})
         }
     },
     

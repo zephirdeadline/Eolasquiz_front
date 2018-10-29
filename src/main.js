@@ -24,7 +24,10 @@ const router = new VueRouter({
       path: '/admin', component: require('./components/admin_page/admin_page').default, name: 'admin'
     },   
     {
-      path: '/test/:id/:nbquestion', component: require('./components/test_page/test_page.vue').default, name: 'test'
+      path: '/test/:id/:nbquestion/:uniqid', component: require('./components/test_page/test_page.vue').default, name: 'test'
+    },
+    {
+      path: '/test/:id/:nbquestion', component: require('./components/test_page/test_page.vue').default, name: 'autotest'
     }, 
     {
       path: "/quiz/:id", component: require('./components/quiz_configuration_page/quiz_configuration_page').default, name: 'quiz'
