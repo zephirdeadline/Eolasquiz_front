@@ -1,7 +1,7 @@
 <template>
     <div class="ui teal progress" id="example2">
   <div class="bar"></div>
-  <div class="label">{{progress}}% Done</div>
+  <div class="label">{{Math.floor(progress*10)/10}}% Done</div>
 </div>
 </template>
 

@@ -26,14 +26,14 @@
             <div class="field">
                 <button class="ui circular close icon button" @click="closeQuestion(index)"><i class="close icon"></i></button>
                 <label>Question</label>
-                <textarea rows="2" :name="index" :value="question.text" required></textarea>
+                <textarea rows="2" :name="index" required v-model="question.text"></textarea>
             </div>
             <hr/>
             <div class="field" v-for="(answer, indexanswer) in question.answers" :key="indexanswer">
               
                 <button class="ui circular close icon button" @click="closeAnswer(index, indexanswer)"><i class="close icon"></i></button>
                 <label>Answers</label> 
-                <input class="ui input" :name="index+';'+indexanswer" type="text" :value="answer.text" required/> 
+                <input class="ui input" :name="index+';'+indexanswer" type="text" v-model="answer.text" required/> 
                 <div class="ui toggle checkbox">
                     <input :name="index+';a'" :value="index+';'+indexanswer" type="radio" v-if="answer.is_correct" checked>
                     <input :name="index+';a'" :value="index+';'+indexanswer" type="radio" v-else>
@@ -144,18 +144,18 @@ export default {
             quiz["questions"] = questions
            
             this.$http.put('api/fullquiz/'+this.$route.params.id, quiz, this.headers).then(
-                Response =>  Response,
-                Response => Response
+                Response =>  this.$router.push({name: 'admin'}),
+                Response => console.log(Response)
             )
 
             
         },
         addanswer(index, bool)
         {
-            this.quiz.questions[index].answers.push({'text': '', is_correct: bool, id:-1})
+            this.quiz.questions[index].answers.push({'text': '', is_correct: bool})
         },
         addquestion() {
-            this.quiz.questions.push({'text': '', 'answers':[], 'id':-1 })
+            this.quiz.questions.push({'text': '', 'answers':[] })
             this.addanswer(this.quiz.questions.length -1, true)
             this.addanswer(this.quiz.questions.length -1, false)
         }

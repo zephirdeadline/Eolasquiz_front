@@ -33,7 +33,7 @@
                         Run!
                         <i class="right chevron icon"></i>
                     </router-link> 
-                    <router-link :to="TODO" class="ui  right floated  brown basic button" @click="editquiz(quiz.id)">
+                    <router-link :to='{name: "result", params: {quizid: quiz.id}}'  class="ui  right floated  brown basic button">
                             View results
                         <i class="right chevron icon"></i>
                     </router-link>
@@ -73,7 +73,7 @@ export default {
                    
                     this.quizs = this.quizs.filter((quiz) => quiz.id !== id)
                 },
-                Response => Response
+                Response => console.log(Response)
             )
         }
     }

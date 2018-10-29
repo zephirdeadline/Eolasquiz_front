@@ -86,7 +86,7 @@ export default {
 
     mounted () {
         if (this.$route.params.uniqid === undefined)
-            this.uniqId = uniqid()
+            this.uniqId = this.generateUniqueId()
         else
             this.uniqId = this.$route.params.uniqid
 
@@ -119,7 +119,11 @@ export default {
         changeQuiz () {
             console.log('click')
             this.hideModal()
-            this.uniqId = uniqid()
+            this.uniqId = this.generateUniqueId()
+        },
+
+        generateUniqueId (){
+            return uniqid('auto-')
         },
 
         hideModal () {
@@ -178,7 +182,7 @@ export default {
             });
             
             this.result.badAnswers = badAnswers
-            this.result.score = (this.quiz.questions.length - badAnswers.length /*- (this.quiz.questions.length - Object.values(formArray).length)*/) * 20 / this.quiz.questions.length
+            this.result.score = Math.floor(((this.quiz.questions.length - badAnswers.length) * 20 / this.quiz.questions.length)*10)/10
             
             this.$http.post('api/result/', [{score: this.result.score, quiz: this.quiz.id, uniq_id: this.uniqId}]).then(
                 Response => this.resultSaved = true,

@@ -15,6 +15,9 @@ const router = new VueRouter({
   linkExactActiveClass: 'active',
   routes:[
     {
+      path: '/result/:quizid', component: require('./components/result_page/result_page').default, name: 'result'
+    }, 
+    {
       path: '/createquiz', component: require('./components/createquiz_page/createquiz_page').default, name: 'createquiz'
     },  
     {
