@@ -28,7 +28,7 @@
         <form class="ui form" @submit.prevent>
         <div class="field">
             <label for="">Nombre de questions</label>
-            <input name="nb_questions" type="number" v-model="nb_question" placeholder="10"/>
+            <input name="nb_questions" type="number" v-model="nb_question" placeholder="10" min="1"/>
         </div>
         
         <input class="ui button" type="submit" value="Tester!" @click="runtest()">

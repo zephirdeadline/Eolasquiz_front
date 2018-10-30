@@ -1,20 +1,20 @@
 <template>
     <div class="content">
         <div class="ui modal">
-        <i class="close icon"></i>
-        <div class="header">
-            Warning
-        </div>
-        <div class="image content">
-            
-            <div class="description">
-            This quiz instance is already done
+            <i class="close icon"></i>
+            <div class="header">
+                Warning
+            </div>
+            <div class="image content">
+                
+                <div class="description">
+                This quiz instance is already done
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui button" @click="changeQuiz">Give me another!</div>
             </div>
         </div>
-        <div class="actions">
-            <div class="ui button" @click="changeQuiz">Give me another!</div>
-        </div>
-    </div>
         <form class='ui form' @submit.prevent="viewscore" v-if="!displayScore" id="form">
             <h1>{{quiz.name}}</h1>
 

@@ -39,7 +39,7 @@ const router = new VueRouter({
       path: "/welcome", component: require('./components/welcome_page/welcome_page.vue').default, name: "welcome"
     },
     {
-      path: "/", component: require('./components/login_page/page_login.vue').default
+      path: "/", component: require('./components/welcome_page/welcome_page.vue').default
     },
     ]
 })
