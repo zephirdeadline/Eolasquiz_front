@@ -36,10 +36,10 @@ const router = new VueRouter({
       path: "/quiz/:id", component: require('./components/quiz_configuration_page/quiz_configuration_page').default, name: 'quiz'
     },
     {
-      path: "/welcome", component: require('./components/welcome_page/welcome_page.vue').default, name: "welcome"
+      path: "/login", component: require('./components/login_page/page_login.vue').default, name: "login"
     },
     {
-      path: "/", component: require('./components/welcome_page/welcome_page.vue').default
+      path: "/", component: require('./components/welcome_page/welcome_page.vue').default, name: "welcome"
     },
     ]
 })

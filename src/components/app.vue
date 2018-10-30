@@ -11,8 +11,8 @@
            
             <div class="right menu" >
                 <a class="ui item" @click="logout" >
-                <span v-if="$store.getters.getUser.token !== undefined">Logout</span>
-                <span v-else>Login</span> 
+                <span v-if="$store.getters.getUser.token !== undefined" @click="logout">Logout</span>
+                <span v-else @click="login">Login</span> 
                 </a>
             </div>
         </div>
@@ -33,6 +33,9 @@ export default {
       logout(){
           window.localStorage.clear()
           this.$router.push('/')
+      },
+      login(){
+          this.$router.push({name:'login'})
       }
   }
   
