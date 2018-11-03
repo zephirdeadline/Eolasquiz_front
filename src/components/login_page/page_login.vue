@@ -9,7 +9,9 @@
             <label for="">password</label>
             <input type="password" name="password" v-model="user.password"/>
         </div>
-        <input class="ui button" type="submit" @click="loginfct" value="Login"> <input class="ui button" @click="registerfct" type="submit" value="Register"><input class="ui button" @click="skipfct" type="submit" value="Skip">
+        <input class="ui button" type="submit" @click="loginfct" value="Login"> 
+        <input class="ui button" @click="registerfct" type="submit" value="Register">
+        <input class="ui button" @click="skipfct" type="submit" value="Skip">
     </form>
 </div>
 </template>
@@ -39,7 +41,7 @@ export default {
                             this.user.id = JSON.parse(Response.bodyText).id
                             delete this.user.password
                             this.$store.dispatch('changeUser', this.user)
-                            this.$router.push("welcome")
+                            this.$router.push({name: "welcome"})
                         }, 
                         Response => Response
                     )
@@ -56,7 +58,7 @@ export default {
         },
 
         skipfct () {
-            this.$router.push("welcome")
+            this.$router.push({name: "welcome"})
         }
     }
 }

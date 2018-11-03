@@ -1,5 +1,6 @@
 
 <template>  
+
     <div>
         <div class="ui secondary pointing menu" >
             <router-link to="/" class="item" exact>
@@ -10,7 +11,7 @@
             </router-link>
            
             <div class="right menu" >
-                <a class="ui item" @click="logout" >
+                <a class="ui item" >
                 <span v-if="$store.getters.getUser.token !== undefined" @click="logout">Logout</span>
                 <span v-else @click="login">Login</span> 
                 </a>
@@ -21,6 +22,8 @@
         </div>
 
     </div>
+
+            
     
 </template>
 
@@ -32,13 +35,15 @@ export default {
   methods: {
       logout(){
           window.localStorage.clear()
-          this.$router.push('/')
+          this.$store.dispatch('clear')
+          this.$router.push({name: "login"})
       },
-      login(){
-          this.$router.push({name:'login'})
+      login() {
+          this.$router.push({name: "login"})
       }
   }
   
   }
 </script>
 
+ 

@@ -82,7 +82,8 @@ export default {
                 this.quizs = JSON.parse(Response.bodyText) 
                 this.is_loaded = false
                 }, 
-            Response => Response)
+            Response => 
+                console.log(Response))
         }
     },
 
