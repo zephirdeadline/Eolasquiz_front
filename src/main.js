@@ -11,7 +11,7 @@ Vue.use(Vuex)
 Vue.use(VueResource)
 Vue.use(VueMaterial);
 
-Vue.http.options.root = 'http://localhost:8000/'
+Vue.http.options.root = 'https://quizengine.w4pity.fr/'
 
 
 const router = new VueRouter({
