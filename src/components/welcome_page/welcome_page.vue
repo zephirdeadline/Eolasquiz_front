@@ -1,10 +1,10 @@
 <template>
-<div class="title">
+<div class="content">
 
-    <h1 class="ui center aligned icon header">
+    <h1 class="ui center aligned icon header title">
         <i class="circular users icon"></i>
         Kaestio
-    </h1>
+       </h1>
     <div>
         <div class="ui segment" id="loader" v-if="is_loaded">
             <div class="ui active inverted dimmer">
@@ -14,7 +14,6 @@
     </div>
     <hr>
     <div class="quiz" v-if="!is_loaded">
-        
         <div class="ui card " id="card" v-for="quiz in quizs" :key="quiz.id">
             <div class="image"> 
                 <img src="../../assets/quiz.jpg">
@@ -39,6 +38,12 @@
                 </a>
                 
             </div>
+
+             
+    
+        </div>
+        <div class="ui card " id="card">
+            <iframe src="//dge4uaysoh8oy.cloudfront.net/site/images/banners/blog/sticky-banner-blog/index.html" scrolling="no" allowtransparency="true" allowfullscreen="true" data-rocket-lazyload="fitvidscompatible" data-lazy-src="//dge4uaysoh8oy.cloudfront.net/site/images/banners/blog/sticky-banner-blog/index.html" class="lazyloaded" data-was-processed="true" frameborder="0"></iframe>
         </div>
     </div>
 </div>
@@ -96,6 +101,12 @@ export default {
 
 
 <style>
+
+.lazyloaded {
+    width: 100% !important; 
+    height: 100% !important; 
+}
+
 .thumbs.down.icon
 {
     margin-left: 5px
@@ -113,4 +124,8 @@ h1 {
 #loader {
     height: 500px;
 }
+.title {
+    color: aliceblue !important
+}
+
 </style>

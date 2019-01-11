@@ -39,6 +39,21 @@
                     </router-link>
                 </div>
             </div>
+
+            <div class="item">
+                <div class="image">
+                    <iframe src="//dge4uaysoh8oy.cloudfront.net/site/images/banners/blog/sticky-banner-blog/index.html" scrolling="no" allowtransparency="true" allowfullscreen="true" data-rocket-lazyload="fitvidscompatible" data-lazy-src="//dge4uaysoh8oy.cloudfront.net/site/images/banners/blog/sticky-banner-blog/index.html" class="lazyloaded item" data-was-processed="true" frameborder="0"></iframe>
+                </div>
+                <div class="content">
+                    
+                    <a class="ui green basic button">
+                        Accéder au site!
+                        <i class="right chevron icon"></i>
+                    </a> 
+                    
+                </div>
+            </div>
+            
         </div>
     </div>
 </template>

@@ -24,7 +24,7 @@
                 <div class="ui bottom attached  tab segment" :class="isVisible(question.id)">
                    
                     <div class="grouped fields">
-                    <label>{{question.text}}</label>
+                        <label>{{question.text}}</label>
                         
                         <div v-for="answer in question.answers" :key="answer.id">
                             <div class="field">
@@ -199,6 +199,11 @@ export default {
     max-width: 1200px;
     margin: auto;
 }
+
+label {
+    color: aliceblue !important;
+}
+
 h1 {
     text-align: center
 }
@@ -213,4 +218,3 @@ h1 {
      color: black;
  }
 </style>
-[…]

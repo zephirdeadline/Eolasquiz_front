@@ -1,6 +1,5 @@
 
-<template>  
-
+<template> 
     <div>
         <div class="ui secondary pointing menu" >
             <router-link to="/" class="item" exact>
@@ -18,11 +17,12 @@
             </div>
         </div>
         <div class="ui segment">
-            <router-view></router-view>
+           
+                <router-view/>
+            
         </div>
 
     </div>
-
             
     
 </template>
@@ -45,5 +45,20 @@ export default {
   
   }
 </script>
+
+<style>
+
+
+.item{
+    color: aliceblue !important
+}
+.ui.segment{
+
+    background-color: rgb(59, 59, 59)
+}
+
+
+</style>
+
 
  

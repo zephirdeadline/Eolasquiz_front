@@ -1,5 +1,5 @@
 <template>
-<div class="editcontent">
+<div class="content">
     
     <div class="ui modal">
         <i class="close icon"></i>
@@ -160,9 +160,9 @@ export default {
 </script>
 
 <style>
-.editcontent {
+.content {
     max-width: 600px;
-    margin: auto
+    margin: auto;
 }
 .question {
     margin-top: 20px;
@@ -177,7 +177,8 @@ h1 {
     text-align: center
 }
 .title {
-    text-align: center
+    text-align: center;
+    color: black;
 }
 .close {
     float: right
