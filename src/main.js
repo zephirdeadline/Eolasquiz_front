@@ -10,8 +10,8 @@ Vue.use(VueRouter)
 Vue.use(Vuex)
 Vue.use(VueResource)
 Vue.use(VueMaterial);
-var infiniteScroll =  require('vue-infinite-scroll');
-Vue.use(infiniteScroll)
+//var infiniteScroll =  require('vue-infinite-scroll');
+//Vue.use(infiniteScroll)
 
 //Vue.http.options.root = 'https://quizengine.w4pity.fr/'
 Vue.http.options.root = 'http://127.0.0.1:8000/'
