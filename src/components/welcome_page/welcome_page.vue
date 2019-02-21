@@ -1,25 +1,24 @@
 <template>
-  <div class="content">
+  <div class="content"  v-infinite-scroll="loadMore" infinite-scroll-disabled="is_loading" infinite-scroll-distance="100">
     <h1 class="ui center aligned icon header title">
       <i class="circular users icon"></i>
     </h1>
     <div class="ui center aligned icon input">
       <h1>Kaestio →</h1>
-      <form @submit="FindQuiz" method="GET" >
+      <form @submit="FindQuiz" method="GET">
         <input v-model="toFind" name="value" type="text" placeholder="Search...">
         <i class="circular search link icon"></i>
-    </form>
-      
+      </form>
     </div>
     <div>
-      <div class="ui segment" id="loader" v-if="is_loaded">
+      <div class="ui segment" id="loader" v-if="!is_loading">
         <div class="ui active inverted dimmer">
           <div class="ui text loader">Loading</div>
         </div>
       </div>
     </div>
     <hr>
-    <div class="ui four quiz stackable cards" v-if="!is_loaded">
+    <div class="ui four quiz stackable cards" v-if="is_loading">
       <div class="ui card" id="card" v-for="quiz in quizs" :key="quiz.id">
         <div class="image">
           <img src="../../assets/quiz.jpg">
@@ -57,31 +56,52 @@ export default {
 
   data() {
     return {
+      nextUrl: "",
       toFind: "",
       quizs: [],
       headers: {
         headers: { Authorization: this.$store.getters.getUser.token }
       },
-      is_loaded: true
+      is_loading: true,
+      last_load = null
     };
   },
 
   computed: {},
 
   methods: {
+    loadMore () {
+      if (Date.now() - this.last_load == 1000){
+        this.is_loading = true
+         this.$http
+            .get(this.nextUrl.substr(this.nextUrl.indexOf("/", 7) + 1))
+            .then(
+              Response => {
+                
+                let pagination = JSON.parse(Response.bodyText);
+                this.quizs = this.quizs.concat(pagination.results);
+                this.nextUrl = pagination.next;
+                this.is_loading = false
+                last_load = Date.now()
+                
+                
+              },
+              Response => console.log(Response)
+            );
+      }
+    },
     FindQuiz(e) {
-      this.is_loaded = true
-      if(this.toFind === ""){
-        this.getQuizs()
-        return
+      this.is_loading = true;
+      if (this.toFind === "") {
+        this.getQuizs();
+        return;
       }
       this.$http.get("api/quiz/find/" + this.toFind).then(
         Response => {
           this.quizs = JSON.parse(Response.bodyText);
-          this.is_loaded = false;
+          this.is_loading = false;
         },
         Response => console.log(Response.error)
-
       );
       e.preventDefault();
     },
@@ -106,10 +126,13 @@ export default {
       );
     },
     getQuizs() {
-      this.$http.get("api/quiz/", this.headers).then(
+      this.$http.get("api/quiz/last/", this.headers).then(
         Response => {
-          this.quizs = JSON.parse(Response.bodyText);
-          this.is_loaded = false;
+          let pagination = JSON.parse(Response.bodyText);
+          this.quizs = pagination.results;
+          this.nextUrl = pagination.next;
+
+          this.is_loading = false;
         },
         Response => console.log(Response)
       );
@@ -118,7 +141,7 @@ export default {
 
   mounted() {
     this.getQuizs();
-  }
+  },
 };
 </script>
 
