@@ -13,7 +13,7 @@
         </div>
     </div>
     <hr>
-    <div class="quiz" v-if="!is_loaded">
+    <div class="ui four quiz stackable cards" v-if="!is_loaded">
         <div class="ui card " id="card" v-for="quiz in quizs" :key="quiz.id">
             <div class="image"> 
                 <img src="../../assets/quiz.jpg">
@@ -41,9 +41,6 @@
 
              
     
-        </div>
-        <div class="ui card " id="card">
-            <iframe src="//dge4uaysoh8oy.cloudfront.net/site/images/banners/blog/sticky-banner-blog/index.html" scrolling="no" allowtransparency="true" allowfullscreen="true" data-rocket-lazyload="fitvidscompatible" data-lazy-src="//dge4uaysoh8oy.cloudfront.net/site/images/banners/blog/sticky-banner-blog/index.html" class="lazyloaded" data-was-processed="true" frameborder="0"></iframe>
         </div>
     </div>
 </div>
@@ -115,9 +112,7 @@ export default {
     display: flex;
    height: 100%;
 }
-#card {
-    margin: 20px;
-}
+
 h1 {
     text-align: center
 }

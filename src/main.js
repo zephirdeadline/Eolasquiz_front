@@ -12,7 +12,7 @@ Vue.use(VueResource)
 Vue.use(VueMaterial);
 
 Vue.http.options.root = 'https://quizengine.w4pity.fr/'
-
+//Vue.http.options.root = 'http://127.0.0.1:8000/'
 
 const router = new VueRouter({
   mode: 'history',
