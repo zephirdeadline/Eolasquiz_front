@@ -1,6 +1,6 @@
 <template>
     <div class="quiz_config">
-        <div class="ui card ">
+        <div class="ui card">
             <div class="image"> 
                 <img src="../../assets/quiz.jpg">
             </div>
@@ -49,7 +49,7 @@ export default {
 
     methods:{
         getQuizFromServer(id) {
-             this.$http.get('api/quiz/' + id, this.headers).then(Response => this.quiz = JSON.parse(Response.bodyText), Response)
+             this.$http.get('api/quiz/' + id).then(Response => this.quiz = JSON.parse(Response.bodyText), Response)
         },
 
         runtest() {
@@ -69,7 +69,11 @@ export default {
 .quiz_config {
     margin: auto;
     text-align: center;
-    max-width: 500px;
+    max-width: 300px;
+}
+
+.card {
+    text-align: center;
 }
 
 </style>

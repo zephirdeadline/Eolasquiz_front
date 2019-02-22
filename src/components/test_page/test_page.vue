@@ -1,5 +1,5 @@
 <template>
-    <div class="content">
+    <div class="content game center aligned">
         <div class="ui modal">
             <i class="close icon"></i>
             <div class="header">
@@ -195,7 +195,7 @@ export default {
 </script>
 
 <style>
-.content {
+.game {
     max-width: 1200px;
     margin: auto;
 }
