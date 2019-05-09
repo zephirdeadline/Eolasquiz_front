@@ -19,7 +19,6 @@
 
 
 <script>
-import Vuex from 'vuex'
 
 export default {
     name:'login',
@@ -32,15 +31,15 @@ export default {
     },
     methods: {
         loginfct () {
-            this.$http.post('auth/jwt/create/', { "username": this.user.username, "password": this.user.password })
+            this.$http.post('auth/token/create/', { "username": this.user.username, "password": this.user.password })
             .then(
                 Response => {
-                    this.user.token = 'jwt ' + JSON.parse(Response.bodyText).token
+                    this.user.token = 'token ' + JSON.parse(Response.bodyText).token;
                     this.$http.get('auth/users/me/', { headers: {Authorization: this.user.token}}).then( 
                         Response => { 
-                            this.user.id = JSON.parse(Response.bodyText).id
-                            delete this.user.password
-                            this.$store.dispatch('changeUser', this.user)
+                            this.user.id = JSON.parse(Response.bodyText).id;
+                            delete this.user.password;
+                            this.$store.dispatch('changeUser', this.user);
                             this.$router.push({name: "welcome"})
                         }, 
                         Response => Response
