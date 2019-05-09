@@ -34,7 +34,7 @@ export default {
             this.$http.post('auth/token/create/', { "username": this.user.username, "password": this.user.password })
             .then(
                 Response => {
-                    this.user.token = 'token ' + JSON.parse(Response.bodyText).token;
+                    this.user.token = 'token ' + JSON.parse(Response.bodyText).auth_token;
                     this.$http.get('auth/users/me/', { headers: {Authorization: this.user.token}}).then( 
                         Response => { 
                             this.user.id = JSON.parse(Response.bodyText).id;

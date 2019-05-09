@@ -13,7 +13,7 @@
     <div class="ui divided items">
       <div class="item" v-for="quiz in quizs" :key="quiz.id">
         <div class="image">
-          <img v-bind:src="'https://picsum.photos/200/300/?image=' + Math.floor(Math.random()*1000)">
+          <img v-bind:src="'https://picsum.photos/200/300/?random=' + Math.floor(Math.random()*1000)">
         </div>
         <div class="content">
           <button class="ui circular close icon button" @click="deleteQuiz(quiz.id)">

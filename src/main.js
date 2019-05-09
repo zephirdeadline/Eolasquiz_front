@@ -45,6 +45,9 @@ const router = new VueRouter({
       path: "/login", component: require('./components/pages/page_login.vue').default, name: "login"
     },
     {
+      path: "/discover", component: require('./components/pages/discover_page.vue').default, name: "discover"
+    },
+    {
       path: "/", component: require('./components/pages/welcome_page.vue').default, name: "welcome"
     },
     ]
@@ -55,3 +58,5 @@ new Vue({
   router,
   render: h => h(require('./components/app.vue').default)
 });
+
+

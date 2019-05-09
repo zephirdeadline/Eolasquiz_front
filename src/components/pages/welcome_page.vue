@@ -21,7 +21,7 @@
     <div class="ui five quiz stackable cards" v-if="!is_loading">
       <div class="ui card" id="card" v-for="quiz in quizs" :key="quiz.id">
         <div class="image">
-          <img v-bind:src="'https://picsum.photos/200/300?random=' + Math.floor(Math.random()*1000)">
+          <img v-bind:src="'https://picsum.photos/200/150?random=' + Math.floor(Math.random()*1000)">
         </div>
         <div class="content">
           <router-link :to="{ name: 'quiz', params: { id: quiz.id }}" class="header">{{quiz.name}}</router-link>
