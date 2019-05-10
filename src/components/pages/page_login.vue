@@ -2,8 +2,8 @@
 <div class="login">
     <form class="ui form" @submit.prevent>
         <div class="field">
-            <label for="">username</label>
-            <input name="username" type="text" v-model="user.username"/>
+            <label for="">Email</label>
+            <input name="email" type="text" v-model="user.email"/>
         </div>
         <div class="field">
             <label for="">password</label>
@@ -24,21 +24,21 @@ export default {
     name:'login',
     data () {
         return {
-            user: { username: "", password: ""}
+            user: { email: "", password: ""}
         }
     },
     computed: {
     },
     methods: {
         loginfct () {
-            this.$http.post('auth/token/create/', { "username": this.user.username, "password": this.user.password })
+            this.$http.post('auth/token/create/', { "email": this.user.email, "password": this.user.password })
             .then(
                 Response => {
                     this.user.token = 'token ' + JSON.parse(Response.bodyText).auth_token;
                     this.$http.get('auth/users/me/', { headers: {Authorization: this.user.token}}).then( 
                         Response => { 
-                            this.user.id = JSON.parse(Response.bodyText).id;
-                            delete this.user.password;
+                            this.user = JSON.parse(Response.bodyText);
+                            //delete this.user.password;
                             this.$store.dispatch('changeUser', this.user);
                             this.$router.push({name: "welcome"})
                         }, 
@@ -51,7 +51,7 @@ export default {
         },
 
         registerfct () {
-            this.$http.post('auth/users/create/',  { "username": this.user.username, "password": this.user.password }).then(
+            this.$http.post('auth/users/create/',  { "email": this.user.email, "password": this.user.password }).then(
                 response => this.loginfct(), response => response
             )
         },

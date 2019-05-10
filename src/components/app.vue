@@ -1,61 +1,40 @@
 
-<template> 
-    <div>
-        <div class="ui secondary pointing menu" >
-            <router-link to="/" class="item" exact>
-                Home
-            </router-link>
-            <router-link :to="{ name: 'admin'}" class="item" exact v-if="$store.getters.getUser.token !== undefined">
-                Admin
-            </router-link>
-           
-            <div class="right menu" >
-                <a class="ui item" >
-                <span v-if="$store.getters.getUser.token !== undefined" @click="logout">Logout</span>
-                <span v-else @click="login">Login</span> 
-                </a>
-            </div>
-        </div>
-        <div class="ui segment">
-           
-                <router-view/>
-            
-        </div>
-
+<template>
+  <div>
+    <header_main/>
+    <div class="ui segment">
+      <router-view/>
     </div>
-            
-    
+
+  </div>
+
+
 </template>
 
 
 <script>
-export default { 
-  store: require('../store').default,
+    import Vue from 'vue';
+    import Header_main from "./header_main";
+    import apiManager from '../network_manager'
 
-  methods: {
-      logout(){
-          window.localStorage.clear()
-          this.$store.dispatch('clear')
-          this.$router.push({name: "login"})
-      },
-      login() {
-          this.$router.push({name: "login"})
-      }
-  }
-  
-  }
+    Vue.prototype.$api = new apiManager()
+
+    export default {
+        components: {Header_main},
+
+    }
 </script>
 
 <style>
 
 
-.item{
+  .item{
     color: aliceblue !important
-}
-.ui.segment{
+  }
+  .ui.segment{
 
     background-color: rgb(59, 59, 59)
-}
+  }
 
 
 </style>
