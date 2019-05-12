@@ -24,7 +24,7 @@ const mutations = {
   CHANGE_USER: (state, user) => { state.user = user; },
   // SET_QUIZ: (state, quiz) => { state.quiz = quiz; },
   // SET_QUIZ_CONFIG: (state, config) => { state.quizConfig = config; },
-  // CLEAR: (state) => { state.user = {}; },
+  CLEAR: (state) => { state.user = undefined; },
 };
 
 const getters = {
@@ -37,7 +37,7 @@ const actions = {
   changeUser(store, user) { store.commit('CHANGE_USER', user); },
   // setQuiz(store, quiz) { store.commit('SET_QUIZ', quiz); },
   // setQuizConfig(store, config) { store.commit('SET_QUIZ_CONFIG', config); },
-  // clear(store) { store.commit('CLEAR'); },
+  clear(store) { store.commit('CLEAR'); },
 };
 
 const store = new Vuex.Store({

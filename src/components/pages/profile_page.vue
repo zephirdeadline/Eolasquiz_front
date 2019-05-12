@@ -1,22 +1,40 @@
 <template>
   <div class="content">
-    <form @submit="updateProfile" >
+    <form @submit="updateProfile">
       <label for="username">Username</label>
-      <input v-model="user.username" type="text" name="username"/>
+      <input
+        v-model="user.username"
+        type="text"
+        name="username"
+      >
 
       <label for="email">Email</label>
-      <input v-model="user.email" type="text" name="email"/>
-      <button type="submit">Send</button>
+      <input
+        v-model="user.email"
+        type="text"
+        name="email"
+      >
+      <button type="submit">
+        Send
+      </button>
     </form>
     <hr>
     <form>
       <label for="password">Password</label>
-      <input type="password" name="password"/>
+      <input
+        type="password"
+        name="password"
+      >
 
       <label for="confirm_password">Confirm password</label>
-      <input type="password" name="confirm_password"/>
+      <input
+        type="password"
+        name="confirm_password"
+      >
 
-      <button type="submit">Send</button>
+      <button type="submit">
+        Send
+      </button>
     </form>
     <hr>
     STATS
@@ -24,21 +42,22 @@
 </template>
 
 <script>
-    import Header_main from "../header_main";
-    export default {
-        name: "profile_page",
-        data() {
-          return {
-            user: {username: "", email: ""}
-          }
-        },
-        methods: {
-            updateProfile(e) {
-                e.preventDefault()
-                this.$api.updateProfile(this.user).then(res => console.log(res), res => console.log(res))
-            }
-        }
-    }
+import Header_main from '../header_main';
+
+export default {
+  name: 'ProfilePage',
+  data() {
+    return {
+      user: { username: '', email: '' },
+    };
+  },
+  methods: {
+    updateProfile(e) {
+      e.preventDefault();
+      this.$api.updateProfile(this.user).then(res => console.log(res), res => console.log(res));
+    },
+  },
+};
 </script>
 
 <style scoped>

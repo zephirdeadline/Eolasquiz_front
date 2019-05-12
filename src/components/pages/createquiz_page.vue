@@ -25,18 +25,21 @@
          <label>Difficulty</label><input type="number" name="difficulty" id="metadata" min="0" required/>
         <div class="field question" v-for="(question, index) in questions" :key="index">
             <div class="field">
+                <!--Close question-->
                 <button class="ui circular close icon button" @click="closeQuestion(index)"><i class="close icon"></i></button>
                 <label>Question</label>
+                <!--Text Question-->
                 <textarea rows="2" :name="index" required></textarea>
             </div>
             <hr/>
             <div class="field" v-for="(answer, indexanswer) in question" :key="indexanswer">
-              
+                <!--Close answer-->
                 <button class="ui circular close icon button" @click="closeAnswer(index, indexanswer)"><i class="close icon"></i></button>
-                <label>Answers</label> 
+                <label>Answers</label>
+                <!--Text answer-->
                 <input class="ui input" type="text" :name="index+';'+indexanswer" required/> 
                 <div class="ui toggle checkbox">
-                    
+                    <!--Is correct?-->
                     <input :name="index+';a'" :value="index+';'+indexanswer" type="radio">
                     <label>is correct</label>
                 </div>
@@ -52,7 +55,8 @@
                 <i class="plus circle icon"></i>add question
             </div>
         </div>
-        <div v-if="questions.length === 0 " @click="addquestion">
+        <div v-if="questions.lengthKrafty11
+         === 0 " @click="addquestion">
                 <i class="plus circle icon"></i>add question
         </div>
         <div class="sendform">
