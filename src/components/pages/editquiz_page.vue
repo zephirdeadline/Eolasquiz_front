@@ -71,7 +71,6 @@ export default {
             questionToDelete: [],
             answerToDelete:[],
             currentError: "",
-            headers:{ headers: {Authorization: this.$store.getters.getUser.token}}
         }
     },
     methods: {
@@ -80,7 +79,6 @@ export default {
         },
         closeAnswer(indexquestion, indexanswer)
         {
-           
             this.$delete(this.quiz.questions[indexquestion].answers, indexanswer)
         },
         closeQuestion(indexquestion)
@@ -90,11 +88,11 @@ export default {
         },
         errorModal()
         {
-            this.currentError = JSON.parse(Response.bodyText)
+            this.currentError = JSON.parse(Response.bodyText);
             $('.ui.modal').modal('show');
         },
         errorPostModal () {
-            this.currentError = JSON.parse(Response.bodyText).fails[0].error
+            this.currentError = JSON.parse(Response.bodyText).fails[0].error;
             $('.ui.modal').modal('show');
         },
         savequiz()
@@ -102,51 +100,49 @@ export default {
             var form = document.getElementById('form');
             var isValidForm = form.checkValidity();
             if (!isValidForm)
-                return 
+                return;
             var formData = new FormData(form);
-            var formArray = {}
+            var formArray = {};
             formData.forEach(function(value, key){
                 formArray[key] = value
             });
 
-            var quiz = {}
-            quiz["name"] = formData.get("title"),
-            quiz["category"] = formData.get('category'),
-            quiz["difficulty"] = formData.get('difficulty'),
-            quiz["description"] = formData.get('description')
+            var quiz = {};
+            quiz["name"] = formData.get("title");
+            quiz["category"] = formData.get('category');
+            quiz["difficulty"] = formData.get('difficulty');
+            quiz["description"] = formData.get('description');
             
-            var questionToAdd = []
+            var questionToAdd = [];
             Object.entries(formArray).forEach(([key, value]) => {
-                var arrayOfKeyValue = key.split(';')
+                var arrayOfKeyValue = key.split(';');
                  
                 if (arrayOfKeyValue.length === 1){
                     questionToAdd.push(key)
                 }
                 
-            })
-            questionToAdd = questionToAdd.filter((q) => q !== 'category' && q !==  'title' && q !== 'difficulty' && q !== 'description')
+            });
+            questionToAdd = questionToAdd.filter((q) => q !== 'category' && q !==  'title' && q !== 'difficulty' && q !== 'description');
 
-            var questions = []
+            var questions = [];
             questionToAdd.forEach((key) => {
-                var answersKey = Object.entries(formArray).filter(([keyAnswer, keyValue]) => keyAnswer.match(new RegExp(key+";\\d", 'g')))
-                var answers = []
+                var answersKey = Object.entries(formArray).filter(([keyAnswer, keyValue]) => keyAnswer.match(new RegExp(key+";\\d", 'g')));
+                var answers = [];
                 answersKey.forEach(k => {
                     answers.push({ text: k[1], is_correct: (formArray[key+';a'] === k[0]) ? true : false })
                     
-                })
+                });
                 var currentQuestion = {
                     text: formData.get(key),
                     answers: answers
-                }
+                };
                 questions.push(currentQuestion)
 
-            })
-            quiz["questions"] = questions
-           
-            this.$http.put('api/fullquiz/'+this.$route.params.id, quiz, this.headers).then(
-                Response =>  this.$router.push({name: 'admin'}),
-                Response => console.log(Response)
-            )
+            });
+            quiz["questions"] = questions;
+
+            this.$api.edit_full_quiz(this.$route.params.id, quiz)
+                .then(resp => this.$router.push({name: 'admin'}))
 
             
         },
@@ -155,14 +151,16 @@ export default {
             this.quiz.questions[index].answers.push({'text': '', is_correct: bool})
         },
         addquestion() {
-            this.quiz.questions.push({'text': '', 'answers':[] })
-            this.addanswer(this.quiz.questions.length -1, true)
+            this.quiz.questions.push({'text': '', 'answers':[] });
+            this.addanswer(this.quiz.questions.length -1, true);
             this.addanswer(this.quiz.questions.length -1, false)
         }
 
     },
     mounted () {
-        this.$http.get('api/quiz/' + this.$route.params.id, this.headers ).then(Response => { this.quiz = JSON.parse(Response.bodyText)}, Response)
+        this.$api.quiz(this.$route.params.id)
+            .then(resp => resp.json())
+            .then((resp) => {this.quiz = resp})
     }
 }
 

@@ -53,6 +53,18 @@ const router = new VueRouter({
     {
       path: '/profile', component: require('./components/pages/profile_page.vue').default, name: 'profile',
     },
+    {
+      path: '/student', component: require('./components/pages/student_page.vue').default, name: 'student',
+    },
+    {
+      path: '/teacher', component: require('./components/pages/teacher_page.vue').default, name: 'teacher',
+    },
+    {
+      path: '/school', component: require('./components/pages/school_page.vue').default, name: 'school',
+    },
+    {
+      path: '/paiement', component: require('./components/pages/paiement_page.vue').default, name: 'paiement',
+    },
   ],
 });
 

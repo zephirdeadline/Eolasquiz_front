@@ -63,6 +63,14 @@ class NetworkManager {
         name: 'create_user',
         url: () => `${this.baseApi}auth/users/create/`,
       },
+      {
+        name: 'full_quiz',
+        url: (id) => `${this.baseApi}api/fullquiz/${id}`,
+      },
+      {
+        name: 'update_licence',
+        url: () => `${this.baseApi}api/licence/`,
+      },
     ];
   }
 
@@ -141,6 +149,14 @@ class NetworkManager {
 
   createUser(data) {
     return fetch(this.getUrl('create_user'), { method: 'POST', headers: this.getHeader(), body: JSON.stringify(data) });
+  }
+
+  edit_full_quiz(id, quiz) {
+    return fetch(this.getUrl('full_quiz', id), { method: 'PUT', headers: this.getHeader(), body: JSON.stringify(quiz) });
+  }
+
+  update_licence(plan) {
+    return fetch(this.getUrl('update_licence'), { method: 'PATCH', headers: this.getHeader(), body: JSON.stringify({licence_type: plan}) });
   }
 }
 export default NetworkManager;

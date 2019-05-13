@@ -15,8 +15,37 @@
     >
       Admin
     </router-link>
-    {{getUserName}}
+    <router-link
+      v-if="is_logged && getLicenceType === 'teacher'"
+      :to="{ name: 'teacher'}"
+      class="item"
+      exact
+    >
+      Teacher
+    </router-link>
+    <router-link
+      v-if="is_logged && getLicenceType === 'school'"
+      :to="{ name: 'school'}"
+      class="item"
+      exact
+    >
+      School
+    </router-link>
+    <router-link
+      v-if="is_logged && getLicenceType === 'student'"
+      :to="{ name: 'student'}"
+      class="item"
+      exact
+    >
+      Student
+    </router-link>
+<!-- **************   -->
     <div class="right menu">
+      <a class="ui item">
+        <span
+          v-if="is_logged"
+        >Notifications</span>
+      </a>
       <a class="ui item">
         <span
           v-if="is_logged"
@@ -44,6 +73,12 @@ export default {
     getUserName() {
       if (this.is_logged) {
         return this.$store.getters.getUser.username;
+      }
+      return '';
+    },
+    getLicenceType() {
+      if (this.is_logged) {
+        return this.$store.getters.getUser.licence_type;
       }
       return '';
     },
