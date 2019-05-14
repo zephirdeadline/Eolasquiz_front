@@ -1,22 +1,28 @@
 <template>
-  <div class="content">
-    <h1 class="ui center aligned icon header title">
-      <i class="circular users icon" />
-    </h1>
-    <search_bar @FindQuiz="FindQuiz" />
-    <div>
-      <loader_panel :is_loading="is_loading" />
-    </div>
-    <hr>
-    <div
-            v-if="!is_loading"
-            class="ui five quiz stackable cards"
-    >
-      <card_quiz
-              v-for="quiz in quizs"
-              :key="quiz.id"
-              :quiz="quiz"
-      />
+  <div>
+
+    <Header_main />
+
+    <div class="content">
+
+      <h1 class="ui center aligned icon header title">
+        <i class="circular users icon" />
+      </h1>
+      <search_bar @FindQuiz="FindQuiz" />
+      <div>
+        <loader_panel :is_loading="is_loading" />
+      </div>
+      <hr>
+      <div
+              v-if="!is_loading"
+              class="ui five quiz stackable cards"
+      >
+        <card_quiz
+                v-for="quiz in quizs"
+                :key="quiz.id"
+                :quiz="quiz"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -27,10 +33,11 @@
   import Card_quiz from '../card_quiz';
   import Search_bar from "../search_bar";
   import Loader_panel from "../loader_panel";
+  import Header_main from "../header_main";
 
   export default {
     name: 'Welcome',
-    components: {Loader_panel, Search_bar, Card_quiz },
+    components: {Loader_panel, Search_bar, Card_quiz, Header_main },
     data() {
       return {
         nextUrl: null,
@@ -67,12 +74,12 @@
       loadMore() {
         if (this.nextUrl !== null) {
           this.$api.loadMore(this.nextUrl)
-                  .then(resp => resp.json())
-                  .then((resp) => {
-                            this.quizs = this.quizs.concat(resp.results);
-                            this.nextUrl = resp.next;
-                          }
-                  );
+            .then(resp => resp.json())
+            .then((resp) => {
+                this.quizs = this.quizs.concat(resp.results);
+                this.nextUrl = resp.next;
+              }
+            );
         }
       },
       FindQuiz(e) {
@@ -84,21 +91,21 @@
           return;
         }
         this.$api.find(e)
-                .then(Response => Response.json())
-                .then((Response) => {
-                  this.quizs = Response;
-                  this.is_loading = false;
-                });
+          .then(Response => Response.json())
+          .then((Response) => {
+            this.quizs = Response;
+            this.is_loading = false;
+          });
       },
       getQuizs() {
         this.is_loading = true;
         this.$api.last()
-                .then(resp => resp.json())
-                .then((resp) => {
-                  this.quizs = resp.results;
-                  this.nextUrl = resp.next;
-                  this.is_loading = false;
-                });
+          .then(resp => resp.json())
+          .then((resp) => {
+            this.quizs = resp.results;
+            this.nextUrl = resp.next;
+            this.is_loading = false;
+          });
       },
     },
   };

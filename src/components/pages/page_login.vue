@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <header-main/>
   <div class="login">
     <form
             class="ui form"
@@ -40,14 +42,17 @@
       >
     </form>
   </div>
+    </div>
 </template>
 
 
 <script>
 
+    import HeaderMain from "../header_main";
     export default {
         name: 'Login',
-        data() {
+      components: {HeaderMain},
+      data() {
             return {
                 user: { email: '', password: '' },
             };

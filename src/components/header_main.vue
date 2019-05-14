@@ -8,7 +8,7 @@
       Home
     </router-link>
     <router-link
-      v-if="is_logged"
+      v-if="isLogged"
       :to="{ name: 'admin'}"
       class="item"
       exact
@@ -16,7 +16,7 @@
       Admin
     </router-link>
     <router-link
-      v-if="is_logged && getLicenceType === 'teacher'"
+      v-if="isLogged && getLicenceType === 'teacher'"
       :to="{ name: 'teacher'}"
       class="item"
       exact
@@ -24,7 +24,7 @@
       Teacher
     </router-link>
     <router-link
-      v-if="is_logged && getLicenceType === 'school'"
+      v-if="isLogged && getLicenceType === 'school'"
       :to="{ name: 'school'}"
       class="item"
       exact
@@ -32,7 +32,7 @@
       School
     </router-link>
     <router-link
-      v-if="is_logged && getLicenceType === 'student'"
+      v-if="isLogged && getLicenceType === 'student'"
       :to="{ name: 'student'}"
       class="item"
       exact
@@ -43,18 +43,18 @@
     <div class="right menu">
       <a class="ui item">
         <span
-          v-if="is_logged"
+          v-if="isLogged"
         >Notifications</span>
       </a>
       <a class="ui item">
         <span
-          v-if="is_logged"
+          v-if="isLogged"
           @click="view_profile"
         >Profile</span>
       </a>
       <a class="ui item">
         <span
-          v-if="is_logged"
+          v-if="isLogged"
           @click="logout"
         >Logout</span>
         <span
@@ -67,30 +67,41 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex'
 export default {
   name: 'HeaderMain',
+  data() {
+    return {
+      isLogged: false,
+      test: true
+    }
+  },
+
   computed: {
     getUserName() {
-      if (this.is_logged) {
-        return this.$store.getters.getUser.username;
+      if (this.is_logged()) {
+        return this.$store.state.user.username;
       }
       return '';
     },
     getLicenceType() {
-      if (this.is_logged) {
-        return this.$store.getters.getUser.licence_type;
+      if (this.is_logged()) {
+        return this.$store.state.user.licence_type;
       }
       return '';
     },
-    is_logged() {
-      return this.$store.getters.getUser !== undefined;
-    },
   },
   methods: {
+
+    is_logged() {
+      console.log(this.$store.state.user, this.$store.getters.user)
+      return this.$store.state.user !== undefined;
+    },
     logout() {
-      window.localStorage.clear();
       this.$store.dispatch('clear');
+      window.localStorage.clear();
       this.$router.push({ name: 'login' });
+      this.isLogged = this.is_logged()
     },
     login() {
       this.$router.push({ name: 'login' });
@@ -99,6 +110,11 @@ export default {
       this.$router.push({ name: 'profile' });
     },
   },
+
+  mounted() {
+    this.isLogged = this.is_logged();
+    console.log("mounted")
+  }
 };
 </script>
 

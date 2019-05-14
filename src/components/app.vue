@@ -1,7 +1,6 @@
 
 <template>
   <div>
-    <Header_main />
     <div class="ui segment">
       <router-view />
     </div>

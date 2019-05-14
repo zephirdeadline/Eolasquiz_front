@@ -1,4 +1,6 @@
 <template>
+    <div>
+        <header-main/>
     <div class="school_page">
         <div @click="AddTeacher">Add teacher</div>
         <p>Liste des profs</p>
@@ -8,11 +10,14 @@
             </li>
         </ul>
     </div>
+        </div>
 </template>
 
 <script>
+    import HeaderMain from "../header_main";
     export default {
         name: "school_page",
+        components: {HeaderMain},
         data() {
             return {
                 teachers: []

@@ -28,7 +28,7 @@ const mutations = {
 };
 
 const getters = {
-  getUser: state => state.user,
+  user: state => state.user,
   // getQuiz: state => state.quiz,
   // getQuizConfig: state => state.quizConfig,
 };

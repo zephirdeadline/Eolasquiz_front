@@ -141,7 +141,7 @@ export default {
             });
             quiz["questions"] = questions;
 
-            this.$api.edit_full_quiz(this.$route.params.id, quiz)
+            this.$api.editFullQuiz(this.$route.params.id, quiz)
                 .then(resp => this.$router.push({name: 'admin'}))
 
             

@@ -4,7 +4,7 @@ import store from './store';
 class NetworkManager {
   constructor() {
     // Vue.store.getters.use;
-    this.baseApi = 'http://127.0.0.1:8000/';
+    this.baseApi = 'http://127.0.0.1:8001/';
 
     this.urlsApi = [
       {
@@ -65,11 +65,31 @@ class NetworkManager {
       },
       {
         name: 'full_quiz',
-        url: (id) => `${this.baseApi}api/fullquiz/${id}`,
+        url: id => `${this.baseApi}api/fullquiz/${id}`,
       },
       {
-        name: 'update_licence',
+        name: 'updateLicence',
         url: () => `${this.baseApi}api/licence/`,
+      },
+      {
+        name: 'quiz_admin',
+        url: () => `${this.baseApi}api/quiz/admin/`,
+      },
+      {
+        name: 'all_admin_result',
+        url: () => `${this.baseApi}api/alladminresult/`,
+      },
+      {
+        name: 'delete_quiz',
+        url: id => `${this.baseApi}api/quiz/${id}`,
+      },
+      {
+        name: 'find_quiz_in_mine',
+        url: value => `${this.baseApi}api/quiz/find/mine/${value}`,
+      },
+      {
+        name: 'get_messages',
+        url: () => `${this.baseApi}api/messages`,
       },
     ];
   }
@@ -79,16 +99,16 @@ class NetworkManager {
   }
 
   getToken() {
-    const user = store.getters.getUser;
-    if (user !== undefined) {
+    const user = { ...store.getters.user };
+    if (user !== {}) {
       return user.token;
     }
     return '';
   }
 
   getHeader() {
-    const user = store.getters.getUser;
-    if (user !== undefined) {
+    const user = { ...store.getters.user };
+    if (user !== {}) {
       return new Headers({
         Authorization: user.token,
         'Content-Type': 'application/json', // eslint-disable-line quote-props
@@ -151,12 +171,32 @@ class NetworkManager {
     return fetch(this.getUrl('create_user'), { method: 'POST', headers: this.getHeader(), body: JSON.stringify(data) });
   }
 
-  edit_full_quiz(id, quiz) {
+  editFullQuiz(id, quiz) {
     return fetch(this.getUrl('full_quiz', id), { method: 'PUT', headers: this.getHeader(), body: JSON.stringify(quiz) });
   }
 
-  update_licence(plan) {
-    return fetch(this.getUrl('update_licence'), { method: 'PATCH', headers: this.getHeader(), body: JSON.stringify({licence_type: plan}) });
+  updateLicence(plan) {
+    return fetch(this.getUrl('updateLicence'), { method: 'PATCH', headers: this.getHeader(), body: JSON.stringify({ licence_type: plan }) });
+  }
+
+  quizAdmin() {
+    return fetch(this.getUrl('quiz_admin'), { headers: this.getHeader() });
+  }
+
+  allAdminResult() {
+    return fetch(this.getUrl('all_admin_result'), { headers: this.getHeader() });
+  }
+
+  deleteQuiz(id) {
+    return fetch(this.getUrl('delete_quiz', id), { method: 'DELETE', headers: this.getHeader() });
+  }
+
+  findQuizInMine(value) {
+    return fetch(this.getUrl('find_quiz_in_mine', value), { headers: this.getHeader() });
+  }
+
+  getMessages() {
+    return fetch(this.getUrl('get_messages'), { headers: this.getHeader() });
   }
 }
 export default NetworkManager;
