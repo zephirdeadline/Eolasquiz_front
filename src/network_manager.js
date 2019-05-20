@@ -91,6 +91,26 @@ class NetworkManager {
         name: 'get_messages',
         url: () => `${this.baseApi}api/messages`,
       },
+      {
+        name: 'get_message',
+        url: id => `${this.baseApi}api/message/${id}`,
+      },
+      {
+        name: 'post_message',
+        url: () => `${this.baseApi}api/messages/`,
+      },
+      {
+        name: 'get_classes',
+        url: () => `${this.baseApi}api/classes/`,
+      },
+      {
+        name: 'post_teacher',
+        url: () => `${this.baseApi}api/teacher/`,
+      },
+      {
+        name: 'post_class',
+        url: () => `${this.baseApi}api/classes/`,
+      },
     ];
   }
 
@@ -197,6 +217,26 @@ class NetworkManager {
 
   getMessages() {
     return fetch(this.getUrl('get_messages'), { headers: this.getHeader() });
+  }
+
+  getMessage(id) {
+    return fetch(this.getUrl('get_message', id), { headers: this.getHeader() });
+  }
+
+  postMessage(message) {
+    return fetch(this.getUrl('post_message', message), { method: 'POST', headers: this.getHeader(), body: JSON.stringify(message) });
+  }
+
+  getClasses() {
+    return fetch(this.getUrl('get_classes'), { headers: this.getHeader() });
+  }
+
+  postTeacher(email) {
+    return fetch(this.getUrl('post_teacher'), { headers: this.getHeader(), method: 'POST', body: JSON.stringify({ email }) });
+  }
+
+  postClass(name) {
+    return fetch(this.getUrl('post_class'), { headers: this.getHeader(), method: 'POST', body: JSON.stringify({ name }) });
   }
 }
 export default NetworkManager;

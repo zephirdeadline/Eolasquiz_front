@@ -23,15 +23,18 @@
         <div class="extra content">
           <liker :quiz="quiz" ></liker>
         </div>
+        <quiz_sharer :quiz_id="quiz.id" nb_questions="10"/>
+
       </div>
 </template>
 
 <script>
     import Liker from './liker';
+    import Quiz_sharer from "./quiz_sharer";
     export default {
         name: "card_quiz",
         props:['quiz'],
-        components:{Liker}
+        components:{Quiz_sharer, Liker}
     }
 </script>
 

@@ -65,6 +65,9 @@ const router = new VueRouter({
     {
       path: '/paiement', component: require('./components/pages/paiement_page.vue').default, name: 'paiement',
     },
+    {
+      path: '/messages', component: require('./components/pages/messages_page.vue').default, name: 'messages',
+    },
   ],
 });
 

@@ -41,6 +41,13 @@
     </router-link>
 <!-- **************   -->
     <div class="right menu">
+      <router-link
+        v-if="isLogged"
+        :to="{ name: 'messages'}"
+        class="item"
+        exact>
+        <span>Messages</span>
+      </router-link>
       <a class="ui item">
         <span
           v-if="isLogged"
