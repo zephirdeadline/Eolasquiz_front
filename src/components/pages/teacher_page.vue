@@ -7,7 +7,7 @@
             <div>Overview</div>
             <div>Send message to teacher</div>
             <div>add class
-                <form @click.prevent="addClass()">
+                <form @submit.prevent="addClass()">
                     <input type="text" v-model="class_name" placeholder="name">
                     <input type="submit" />
                 </form>
