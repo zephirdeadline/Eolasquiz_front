@@ -2,7 +2,9 @@
     <div>
         <header-main/>
     <div class="school_page">
-        <div>add class</div>
+        <div>add class
+            <add_class/>
+        </div>
         <div>Add teacher</div>
         <form @submit.prevent="addTeacher()">
             <input type="text" v-model="email" placeholder="Email" />
@@ -20,9 +22,10 @@
 
 <script>
     import HeaderMain from "../header_main";
+    import Add_class from "./add_class";
     export default {
         name: "school_page",
-        components: {HeaderMain},
+        components: {Add_class, HeaderMain},
         data() {
             return {
                 teachers: [],

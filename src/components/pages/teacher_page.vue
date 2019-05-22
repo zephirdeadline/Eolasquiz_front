@@ -7,10 +7,7 @@
             <div>Overview</div>
             <div>Send message to teacher</div>
             <div>add class
-                <form @submit.prevent="addClass()">
-                    <input type="text" v-model="class_name" placeholder="name">
-                    <input type="submit" />
-                </form>
+                <add_class/>
             </div>
         </div>
         <quiz_broadcaster/>
@@ -20,19 +17,11 @@
 <script>
     import HeaderMain from "../header_main";
     import Quiz_broadcaster from "../quiz_broadcaster";
+    import Add_class from "./add_class";
     export default {
         name: "teacher_page",
-        components: {Quiz_broadcaster, HeaderMain},
-        data() {
-            return {
-                class_name: ''
-            }
-        },
-        methods: {
-            addClass() {
-                this.$api.postClass(this.class_name)
-            }
-        }
+        components: {Add_class, Quiz_broadcaster, HeaderMain},
+
     }
 </script>
 
