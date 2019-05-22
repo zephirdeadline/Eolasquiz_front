@@ -45,7 +45,6 @@
         methods: {
             getQuizFromServer(id) {
                 this.$api.quiz(id)
-                    .then(resp => resp.json())
                     .then((resp) => { this.quiz = resp; })
             },
 

@@ -86,7 +86,6 @@
             this.$api.resultId(this.uniqId)
                     .then((resp) => { if (resp.status < 400) { $('.ui.modal').modal('show'); }});
             this.$api.quiz(this.$route.params.id)
-                    .then(resp => resp.json())
                     .then(resp => {
                                 this.quiz = resp;
                                 var questions = this.quiz.questions.sort(() => {

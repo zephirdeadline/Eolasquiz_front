@@ -95,7 +95,6 @@
       },
       loadMore() {
         this.$api.loadMore(this.nextUrl/*.substr(this.nextUrl.indexOf("/", 7) + 1)*/)
-          .then(resp => resp.json())
           .then(
             resp => {
               this.quizs = this.quizs.concat(resp.results);
@@ -105,7 +104,6 @@
       },
       getQuizs() {
         this.$api.quizAdmin()
-          .then(resp => resp.json())
           .then((resp) => {
             this.quizs = resp.results;
             this.nextUrl = resp.next
@@ -114,7 +112,6 @@
       ,
       getResult() {
         this.$api.allAdminResult()
-          .then(resp => resp.json())
           .then((resp) => {
               this.results = resp
             }
@@ -136,7 +133,6 @@
           return;
         }
         this.$api.findQuizInMine(this.toFind)
-          .then(resp => resp.json())
           .then(resp => {
             this.isSearch = false;
             this.quizs = resp

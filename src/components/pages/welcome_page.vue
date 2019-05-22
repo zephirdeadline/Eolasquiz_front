@@ -74,7 +74,6 @@
       loadMore() {
         if (this.nextUrl !== null) {
           this.$api.loadMore(this.nextUrl)
-            .then(resp => resp.json())
             .then((resp) => {
                 this.quizs = this.quizs.concat(resp.results);
                 this.nextUrl = resp.next;
@@ -100,7 +99,6 @@
       getQuizs() {
         this.is_loading = true;
         this.$api.last()
-          .then(resp => resp.json())
           .then((resp) => {
             this.quizs = resp.results;
             this.nextUrl = resp.next;

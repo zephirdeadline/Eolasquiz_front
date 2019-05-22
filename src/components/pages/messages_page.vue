@@ -52,7 +52,7 @@
     },
     methods: {
       getMessage() {
-        this.$api.getMessages().then(resp => resp.json())
+        this.$api.getMessages()
         .then(resp =>
         {
           this.retrievedMessages = resp.filter(m => m.user_to === this.$store.getters.user.id);
@@ -61,7 +61,7 @@
         )
       },
       viewMessage(id) {
-        this.$api.getMessage(id).then(resp => resp.json())
+        this.$api.getMessage(id)
         .then(resp => this.currentMessage = resp.content)
       },
       sendMessage() {

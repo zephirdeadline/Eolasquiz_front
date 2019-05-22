@@ -159,7 +159,6 @@ export default {
     },
     mounted () {
         this.$api.quiz(this.$route.params.id)
-            .then(resp => resp.json())
             .then((resp) => {this.quiz = resp})
     }
 }

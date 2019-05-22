@@ -17,7 +17,6 @@
             },
             setLicence() {
                 this.$api.updateLicence(this.$route.query.plan)
-                        .then(resp => resp.json())
                         .then(resp => this.$store.dispatch('changeUser', { ...resp, token: this.$store.getters.user.token }))
             }
         }
