@@ -2,10 +2,13 @@
     <div>
         <header-main/>
         <div class="student-page">
-            <div class="notif">View notification</div>
-            <div class="dashboard">Dashboard</div>
+            <div class="dashboard">Dashboard
+                <div v-for="result in results" :key="result.id">
+                    {{result.quiz_name}} {{result.score}}
+                </div>
+            </div>
+
             <div>Overview</div>
-            <div>Send message to</div>
         </div>
     </div>
 </template>
@@ -14,7 +17,17 @@
     import HeaderMain from "../header_main";
     export default {
         name: "student_page",
-        components: {HeaderMain}
+        components: {HeaderMain},
+        data() {
+            return {
+                results: []
+            }
+        },
+        mounted() {
+            this.$api.getMyResults().then(
+                    (resp) => { this.results = resp }
+            )
+        }
     }
 </script>
 

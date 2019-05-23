@@ -1,12 +1,16 @@
 <template>
-    <quiz_configurater/>
+    <div>
+        <header-main/>
+        <quiz_configurater/>
+    </div>
 </template>
 
 <script>
 import Quiz_configurater from "../quiz_configurater";
+import HeaderMain from "../header_main";
 export default {
     name: 'quiz',
-    components: {Quiz_configurater},
+    components: {HeaderMain, Quiz_configurater},
 }
 </script>
 

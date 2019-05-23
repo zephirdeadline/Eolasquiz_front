@@ -149,7 +149,7 @@
   };
 </script>
 
-<style>
+<style scoped>
   .adminpanel {
     max-width: 600px;
     margin: auto;

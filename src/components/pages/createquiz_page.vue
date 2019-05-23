@@ -1,6 +1,6 @@
 <template>
 <div class="content">
-    
+    <header-main/>
     <div class="ui modal">
         <i class="close icon"></i>
         <div class="header">
@@ -55,8 +55,7 @@
                 <i class="plus circle icon"></i>add question
             </div>
         </div>
-        <div v-if="questions.lengthKrafty11
-         === 0 " @click="addquestion">
+        <div v-if="questions.length === 0 " @click="addquestion">
                 <i class="plus circle icon"></i>add question
         </div>
         <div class="sendform">
@@ -68,15 +67,15 @@
 </template>
 
 <script>
+import HeaderMain from "../header_main";
 export default {
     name: "editquiz",
+    components: {HeaderMain},
     data () {
         return {
             quiz: {},
             questions: [['','']],
             currentError: "",
-
-            headers:{ headers: {Authorization: this.$store.getters.getUser.token}}
         }
     },
     methods: {
@@ -94,7 +93,7 @@ export default {
             this.$delete(this.questions, indexquestion)
         },
         errorPostModal () {
-            this.currentError = JSON.parse(Response.bodyText).fails[0].error
+            this.currentError = 'none'
             $('.ui.modal').modal('show');
         },
         savequiz ()
@@ -142,9 +141,8 @@ export default {
 
             })
             quiz["questions"] = questions
-            this.$http.post('api/fullquiz/', [quiz], this.headers).then(
-                Response => this.$router.push({name: 'admin'}),
-                Response => Response
+            this.$api.fullQuiz([quiz]).then(
+                Response => this.$router.push({name: 'admin'})
             )
                    
             

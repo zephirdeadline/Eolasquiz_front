@@ -39,6 +39,7 @@
     >
       Student
     </router-link>
+    {{getUser.school}}
 <!-- **************   -->
     <div class="right menu">
       <router-link
@@ -46,13 +47,9 @@
         :to="{ name: 'messages'}"
         class="item"
         exact>
-        <span>Messages</span>
+        <span>Message</span>
       </router-link>
-      <a class="ui item">
-        <span
-          v-if="isLogged"
-        >Notifications</span>
-      </a>
+
       <a class="ui item">
         <span
           v-if="isLogged"
@@ -74,7 +71,7 @@
 </template>
 
 <script>
-  import { mapState } from 'vuex'
+
 export default {
   name: 'HeaderMain',
   data() {
@@ -85,9 +82,9 @@ export default {
   },
 
   computed: {
-    getUserName() {
+    getUser() {
       if (this.is_logged()) {
-        return this.$store.state.user.username;
+        return this.$store.state.user;
       }
       return '';
     },

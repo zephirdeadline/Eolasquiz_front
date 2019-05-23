@@ -68,6 +68,9 @@ const router = new VueRouter({
     {
       path: '/messages', component: require('./components/pages/messages_page.vue').default, name: 'messages',
     },
+    {
+      path: '/overview', component: require('./components/pages/overview_result_page.vue').default, name: 'overview_result',
+    },
   ],
 });
 

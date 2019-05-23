@@ -22,7 +22,7 @@
 
 <script>
     import HeaderMain from "../header_main";
-    import Add_class from "./add_class";
+    import Add_class from "../add_class";
     export default {
         name: "school_page",
         components: {Add_class, HeaderMain},
@@ -34,7 +34,7 @@
         },
         methods: {
             addTeacher() {
-                this.$api.postTeacher(this.email)
+                this.$api.postUser({ 'email': this.email, 'licence_type': 'teacher' })
             }
         }
     }

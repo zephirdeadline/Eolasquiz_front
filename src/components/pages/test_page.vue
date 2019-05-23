@@ -1,42 +1,46 @@
 <template>
-    <div class="content game center aligned">
-        <div class="ui modal">
-            <i class="close icon"></i>
-            <div class="header">
-                Warning
-            </div>
-            <div class="image content">
+    <div>
+        <header-main/>
+        <div class="content game center aligned">
+            <div class="ui modal">
+                <i class="close icon"></i>
+                <div class="header">
+                    Warning
+                </div>
+                <div class="image content">
 
-                <div class="description">
-                    This quiz instance is already done
+                    <div class="description">
+                        This quiz instance is already done
+                    </div>
+                </div>
+                <div class="actions">
+                    <div class="ui button" @click="changeQuiz">Give me another!</div>
                 </div>
             </div>
-            <div class="actions">
-                <div class="ui button" @click="changeQuiz">Give me another!</div>
-            </div>
+            <form class='ui form' @submit.prevent="viewscore" v-if="!displayScore" id="form">
+                <h1>{{quiz.name}}</h1>
+
+                <progressbar label="zdeedz" :progress="progress"/>
+
+                <div v-for="question in quiz.questions" :key="question.id">
+
+                    <card_question_run :question="question" :current-question="currentQuestion"/>
+
+                </div>
+                <div class="next">
+                    <button @click.prevent="nextQuestion" class="ui primary button ">Next</button>
+                </div>
+                <div class="ui bottom attached  tab segment score" :class="showDisplayEnd ? 'active': ''">
+                    <input type="submit" value="Voir score" class="ui blue basic button ">
+                </div>
+            </form>
+            <display_score
+                    v-else
+                    :result="result"
+                    :result-saved="resultSaved"
+                    :uniq-id="uniqId"/>
+
         </div>
-        <form class='ui form' @submit.prevent="viewscore" v-if="!displayScore" id="form">
-            <h1>{{quiz.name}}</h1>
-
-            <progressbar label="zdeedz" :progress="progress"/>
-
-            <div v-for="question in quiz.questions" :key="question.id">
-
-                <card_question_run :question="question" :current-question="currentQuestion"/>
-
-            </div>
-            <div class="next">
-                        <button @click.prevent="nextQuestion" class="ui primary button ">Next</button>
-                    </div>
-            <div class="ui bottom attached  tab segment score" :class="showDisplayEnd ? 'active': ''">
-                <input type="submit" value="Voir score" class="ui blue basic button ">
-            </div>
-        </form>
-        <display_score
-                v-else
-               :result="result"
-               :result-saved="resultSaved"
-               :uniq-id="uniqId"/>
 
     </div>
 </template>
@@ -48,10 +52,12 @@
     import uniqid from 'uniqid'
     import Display_score from "./display_score";
     import Card_question_run from "./card_question_run";
+    import HeaderMain from "../header_main";
 
     export default {
         name: 'test',
         components:{
+            HeaderMain,
             Card_question_run,
             Display_score,
             Progressbar

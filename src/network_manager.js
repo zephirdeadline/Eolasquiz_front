@@ -5,7 +5,7 @@ import store from './store';
 class NetworkManager {
   constructor() {
     // Vue.store.getters.use;
-    this.baseApi = 'http://127.0.0.1:8000/';
+    this.baseApi = 'http://127.0.0.1:8001/';
 
     this.urlsApi = [
       {
@@ -65,7 +65,7 @@ class NetworkManager {
         url: () => `${this.baseApi}auth/users/create/`,
       },
       {
-        name: 'full_quiz',
+        name: 'full_quiz_id',
         url: id => `${this.baseApi}api/fullquiz/${id}`,
       },
       {
@@ -90,7 +90,7 @@ class NetworkManager {
       },
       {
         name: 'get_messages',
-        url: () => `${this.baseApi}api/messages`,
+        url: () => `${this.baseApi}api/messages/`,
       },
       {
         name: 'get_message',
@@ -105,12 +105,24 @@ class NetworkManager {
         url: () => `${this.baseApi}api/classes/`,
       },
       {
-        name: 'post_teacher',
-        url: () => `${this.baseApi}api/teacher/`,
+        name: 'post_user',
+        url: () => `${this.baseApi}api/user/`,
       },
       {
         name: 'post_class',
         url: () => `${this.baseApi}api/classes/`,
+      },
+      {
+        name: 'post_broadcast_quiz',
+        url: () => `${this.baseApi}api/broadcast/`,
+      },
+      {
+        name: 'get_my_results',
+        url: () => `${this.baseApi}api/myresults/`,
+      },
+      {
+        name: 'post_fullquiz',
+        url: () => `${this.baseApi}api/fullquiz/`,
       },
     ];
   }
@@ -210,7 +222,7 @@ class NetworkManager {
   }
 
   editFullQuiz(id, quiz) {
-    return this.call(this.getUrl('full_quiz', id), { method: 'PUT', headers: this.getHeader(), body: JSON.stringify(quiz) });
+    return this.call(this.getUrl('full_quiz_id', id), { method: 'PUT', headers: this.getHeader(), body: JSON.stringify(quiz) });
   }
 
   updateLicence(plan) {
@@ -249,12 +261,24 @@ class NetworkManager {
     return this.call(this.getUrl('get_classes'), { headers: this.getHeader() });
   }
 
-  postTeacher(email) {
-    return this.call(this.getUrl('post_teacher'), { headers: this.getHeader(), method: 'POST', body: JSON.stringify({ email }) });
+  postUser(data) {
+    return this.call(this.getUrl('post_user'), { headers: this.getHeader(), method: 'POST', body: JSON.stringify(data) });
   }
 
   postClass(name) {
     return this.call(this.getUrl('post_class'), { headers: this.getHeader(), method: 'POST', body: JSON.stringify({ name }) });
+  }
+
+  broadcastQuiz(quizToBroadcast) {
+    return this.call(this.getUrl('post_broadcast_quiz'), { headers: this.getHeader(), method: 'POST', body: JSON.stringify(quizToBroadcast) });
+  }
+
+  getMyResults() {
+    return this.call(this.getUrl('get_my_results'), { headers: this.getHeader() });
+  }
+
+  fullQuiz(data) {
+    return this.call(this.getUrl('post_fullquiz'), { headers: this.getHeader(), method: 'POST', body: JSON.stringify(data) });
   }
 }
 export default NetworkManager;
