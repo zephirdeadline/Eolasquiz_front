@@ -4,14 +4,12 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import VueResource from 'vue-resource';
 import VueMaterial from 'vue-material';
-import 'vue-material/dist/vue-material.min.css';
-import 'vue-material/dist/theme/default-dark.css';
+
 
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueResource);
-Vue.use(VueMaterial);
 
 // Vue.http.options.root = 'https://quizengine.w4pity.fr/'
 Vue.http.options.root = 'http://127.0.0.1:8000/';

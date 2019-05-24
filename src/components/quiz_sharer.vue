@@ -1,6 +1,6 @@
 <template>
   <div>
-    <i class="icon share alternate" @click="displayForm()"></i>
+    <i class="fas fa-share-alt" @click="displayForm()"></i>
     <div class="view" v-if="viewForm">
       <form @submit.prevent="shareQuiz">
         <input type="text" v-model="instanceName" placeholder="Instance's name"/>
@@ -43,5 +43,7 @@
 </script>
 
 <style scoped>
-
+.fas {
+    color: #2a292c;
+  }
 </style>

@@ -22,12 +22,20 @@ export default {
 </script>
 
 <style>
-  .item{
-    color: aliceblue !important
+  body {
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+    margin: 60px 0 0 0;
   }
   .ui.segment{
 
-    background-color: rgb(59, 59, 59)
+  }
+
+  .item{
+    text-decoration: none;
+  }
+
+  .active {
+    color: blue !important;
   }
 
 

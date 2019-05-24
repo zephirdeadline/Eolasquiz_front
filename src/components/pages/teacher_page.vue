@@ -73,7 +73,7 @@ border-color: transparent transparent transparent #007bff;
         padding: 10px;
     }
     .item-panel:hover {
-        background-color: green;
+        background-color: #037aff;
         cursor: pointer;
     }
     .main-container {
@@ -82,12 +82,16 @@ border-color: transparent transparent transparent #007bff;
           -webkit-transition: flex 2s; /* Safari */
           transition: all 500ms ease-in-out;
         height: auto;
+      padding-top: 20px;
+
     }
     .active {
-        background-color: rebeccapurple;
+        background-color: #94caff;
+
     }
     .left-panel {
         flex-direction: column;
+
     }
     .content-center {
         padding: 20px;

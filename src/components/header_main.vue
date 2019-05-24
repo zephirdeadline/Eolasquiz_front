@@ -1,54 +1,42 @@
 <template>
-  <div class="ui secondary pointing menu">
+  <div class="menu">
     <router-link
       to="/"
       class="item"
       exact
-    >
-      Home
-    </router-link>
+    >Home</router-link>
     <router-link
       v-if="isLogged"
       :to="{ name: 'admin'}"
       class="item"
       exact
-    >
-      Admin
-    </router-link>
+    >Admin</router-link>
     <router-link
       v-if="isLogged && getLicenceType === 'teacher'"
       :to="{ name: 'teacher'}"
       class="item"
       exact
-    >
-      Teacher
-    </router-link>
+    >Teacher</router-link>
     <router-link
       v-if="isLogged && getLicenceType === 'school'"
       :to="{ name: 'school'}"
       class="item"
       exact
-    >
-      School
-    </router-link>
+    >School</router-link>
     <router-link
       v-if="isLogged && getLicenceType === 'student'"
       :to="{ name: 'student'}"
       class="item"
       exact
-    >
-      Student
-    </router-link>
+    >Student</router-link>
     {{getUser.school}}
 <!-- **************   -->
-    <div class="right menu">
+    <div class="right">
       <router-link
         v-if="isLogged"
         :to="{ name: 'messages'}"
         class="item"
-        exact>
-        <span>Message</span>
-      </router-link>
+        exact>Message</router-link>
 
       <a class="ui item">
         <span
@@ -123,5 +111,30 @@ export default {
 </script>
 
 <style scoped>
+  a:visited {
+    color: black;
+  }
+  .right{
+    float: right;
+  }
+  .menu {
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: #94caff;
+    box-shadow: 2px 2px 8px 2px #5d5d5d;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 10;
+  }
+  .item {
+    padding: 5px;
+  }
 
+  .item:hover {
+    padding: 20px;
+    transition: all 0.25s;
+    background-color: #326bff;
+    z-index: 10;
+  }
 </style>

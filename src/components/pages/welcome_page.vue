@@ -5,17 +5,14 @@
 
     <div class="content">
 
-      <h1 class="ui center aligned icon header title">
-        <i class="circular users icon" />
-      </h1>
-      <search_bar @FindQuiz="FindQuiz" />
-      <div>
-        <loader_panel :is_loading="is_loading" />
-      </div>
+      <search_bar class="search" @FindQuiz="FindQuiz" />
+
+        <loader_panel class="loader" :is_loading="is_loading" />
+
       <hr>
       <div
               v-if="!is_loading"
-              class="ui five quiz stackable cards"
+              class="cards"
       >
         <card_quiz
                 v-for="quiz in quizs"
@@ -111,6 +108,20 @@
 
 
 <style>
+  .content {
+    /*justify-content: center;*/
+  }
+  .loader {
+    width: 90%;
+    box-shadow: 3px 3px 32px 0px #2a292c;
+    margin: 20px auto auto auto;
+  }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   .lazyloaded {
     width: 100% !important;
     height: 100% !important;
@@ -122,6 +133,10 @@
   .quiz {
     display: flex;
     height: 100%;
+  }
+
+  .search {
+    margin-left: 20px;
   }
 
   h1 {
