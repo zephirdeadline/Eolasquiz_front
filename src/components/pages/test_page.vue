@@ -2,20 +2,20 @@
     <div>
         <header-main/>
         <div class="content game center aligned">
-            <div class="ui modal">
+            <div class="modal">
                 <i class="close icon"></i>
-                <div class="header">
-                    Warning
-                </div>
-                <div class="image content">
-
+                <div class="content">
+                    <div class="header">
+                        Warning
+                    </div>
                     <div class="description">
                         This quiz instance is already done
                     </div>
+                    <div class="actions">
+                        <div class="ui button" @click="changeQuiz">Give me another!</div>
+                    </div>
                 </div>
-                <div class="actions">
-                    <div class="ui button" @click="changeQuiz">Give me another!</div>
-                </div>
+
             </div>
             <form class='ui form' @submit.prevent="viewscore" v-if="!displayScore" id="form">
                 <h1>{{quiz.name}}</h1>
@@ -182,6 +182,22 @@
 </script>
 
 <style>
+    .modal {
+        background-color: rgba(0,0,0, 0.75);
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+    }
+
+    .modal .content {
+        background-color: white;
+        box-shadow: 1px 1px 1px 1px black;
+        width: 50%;
+        height: 10%;
+        margin: auto;
+        margin-top: 45%;
+    }
+
     .game {
         max-width: 1200px;
         margin: auto;

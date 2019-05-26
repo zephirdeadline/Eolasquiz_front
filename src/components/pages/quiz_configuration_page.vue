@@ -1,7 +1,7 @@
 <template>
     <div>
         <header-main/>
-        <quiz_configurater/>
+        <quiz_configurater class="configurator"/>
     </div>
 </template>
 
@@ -16,6 +16,8 @@ export default {
 
 
 <style>
-
+.configurator {
+    width: 100% ;
+}
 
 </style>

@@ -1,8 +1,5 @@
 <template>
-  <div
-
-        class="card"
-      >
+  <div class="card">
         <div class="certificated" v-if="quiz.is_cert_teacher">
           <i class="fas fa-check"></i>Certificated
         </div>
@@ -66,6 +63,11 @@
     width: 200px;
     box-shadow: -1px 4px 8px 2px grey;
     background-color: #94caff;
+    transition: all;
+    transition-duration: 0.25s;
+  }
+  .card:hover {
+    box-shadow: -1px 4px 19px 11px #343434;
   }
   .meta{
     margin-top: 10px;

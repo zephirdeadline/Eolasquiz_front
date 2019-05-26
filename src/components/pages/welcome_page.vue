@@ -47,6 +47,8 @@
     },
     watch: {
       bottom(bottom) {
+
+          console.log('scroll')
         if (bottom && !this.isSearch) {
           this.loadMore();
         }
