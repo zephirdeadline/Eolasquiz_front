@@ -1,9 +1,10 @@
 <template>
     <div>
+    <header-main/>
         <h1>View result</h1>
         <div class="ui celled list">
             <div class="item" v-for="result in results" :key="result.id">
-                <img class="ui avatar image" src="../../assets/quiz.jpg">
+                <img class="ui avatar image" width="35" height="35" src="https://t3.ftcdn.net/jpg/00/64/67/80/160_F_64678017_zUpiZFjj04cnLri7oADnyMH0XBYyQghG.jpg">
                 <div class="content">
                     <div class="header">{{result.uniq_id}}</div>
                     {{result.score}}/20
@@ -16,9 +17,10 @@
 
 
 <script>
+import HeaderMain from "../header_main";
 export default {
     name: 'result',
-    
+    components: {HeaderMain},
     data () {
         return {
             results: []
@@ -26,9 +28,8 @@ export default {
     },
 
     mounted () {
-        this.$http.get('api/allresult/'+this.$route.params.quizid).then(
-            Response => this.results = JSON.parse(Response.bodyText),
-            Response => console.log(Response)
+        this.$api.allResult(this.$route.params.quizid).then(
+            Response => this.results = Response
         )
     },
     methods: {
@@ -38,6 +39,9 @@ export default {
 </script>
 
 
-<style>
-
+<style scoped>
+.item {
+    display: flex;
+    margin: 20px;
+}
 </style>

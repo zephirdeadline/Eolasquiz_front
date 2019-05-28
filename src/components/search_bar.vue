@@ -1,9 +1,8 @@
 <template>
   <div class="">
-      <h1>Kaestio →</h1>
+      <h1>WikiQuiz →</h1>
       <form
-        method="GET"
-        @submit="FindQuiz"
+        @submit.prevent="FindQuiz"
       >
         <div class="search-input">
         <input class="input"
@@ -12,7 +11,7 @@
           type="text"
           placeholder="Search..."
         />
-        <i class="fas fa-search"></i>
+        <i @click="FindQuiz" class="fas fa-search"></i>
           </div>
       </form>
     </div>
@@ -28,7 +27,6 @@
         },
         methods: {
             FindQuiz(e) {
-                e.preventDefault();
                 this.$emit('FindQuiz', this.toFind);
             }
         }

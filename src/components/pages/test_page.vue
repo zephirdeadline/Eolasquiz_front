@@ -2,47 +2,33 @@
     <div>
         <header-main/>
         <div class="content game center aligned">
-            <div class="modal">
-                <i class="close icon"></i>
-                <div class="content">
-                    <div class="header">
-                        Warning
+                <modal @changeQuiz="changeQuiz" :isvisible="displayModal"/>
+                <form @submit.prevent="viewscore" v-if="!displayScore" id="form">
+                    <h1>{{quiz.name}}</h1>
+
+                    <progressbar label="zdeedz" :progress="progress"/>
+
+                    <div v-for="question in quiz.questions" :key="question.id">
+
+                        <card_question_run :question="question" :current-question="currentQuestion"/>
+
                     </div>
-                    <div class="description">
-                        This quiz instance is already done
+                    <div class="next" v-if="!showDisplayEnd">
+                        <button @click.prevent="nextQuestion" class="button-wikiquiz">Next</button>
                     </div>
-                    <div class="actions">
-                        <div class="ui button" @click="changeQuiz">Give me another!</div>
+                    <div class="score next" v-else>
+                        <input type="submit" value="Voir score" class="button-wikiquiz">
                     </div>
-                </div>
+                </form>
+                <display_score
+                        v-else
+                        :result="result"
+                        :result-saved="resultSaved"
+                        :uniq-id="uniqId"/>
 
             </div>
-            <form class='ui form' @submit.prevent="viewscore" v-if="!displayScore" id="form">
-                <h1>{{quiz.name}}</h1>
-
-                <progressbar label="zdeedz" :progress="progress"/>
-
-                <div v-for="question in quiz.questions" :key="question.id">
-
-                    <card_question_run :question="question" :current-question="currentQuestion"/>
-
-                </div>
-                <div class="next">
-                    <button @click.prevent="nextQuestion" class="ui primary button ">Next</button>
-                </div>
-                <div class="ui bottom attached  tab segment score" :class="showDisplayEnd ? 'active': ''">
-                    <input type="submit" value="Voir score" class="ui blue basic button ">
-                </div>
-            </form>
-            <display_score
-                    v-else
-                    :result="result"
-                    :result-saved="resultSaved"
-                    :uniq-id="uniqId"/>
 
         </div>
-
-    </div>
 </template>
 
 
@@ -53,10 +39,12 @@
     import Display_score from "./display_score";
     import Card_question_run from "./card_question_run";
     import HeaderMain from "../header_main";
+    import Modal from "../modal";
 
     export default {
         name: 'test',
         components:{
+            Modal,
             HeaderMain,
             Card_question_run,
             Display_score,
@@ -73,7 +61,9 @@
                 progress: 0,
                 uniqId: "",
                 status: "Ready",
-                resultSaved: false
+                resultSaved: false,
+                displayModal: false
+
             }
         },
 
@@ -84,13 +74,15 @@
         },
 
         mounted () {
+
+
             if (this.$route.params.uniqid === undefined)
                 this.uniqId = this.generateUniqueId();
             else
                 this.uniqId = this.$route.params.uniqid;
 
             this.$api.resultId(this.uniqId)
-                    .then((resp) => { if (resp.status < 400) { $('.ui.modal').modal('show'); }});
+                    .then((resp) => { this.displayModal = true; });
             this.$api.quiz(this.$route.params.id)
                     .then(resp => {
                                 this.quiz = resp;
@@ -105,8 +97,7 @@
 
         methods: {
             changeQuiz () {
-                console.log('click')
-                this.hideModal()
+                this.displayModal = false
                 this.uniqId = this.generateUniqueId()
             },
 
@@ -181,22 +172,8 @@
     }
 </script>
 
-<style>
-    .modal {
-        background-color: rgba(0,0,0, 0.75);
-        width: 100vw;
-        height: 100vh;
-        position: fixed;
-    }
+<style scoped>
 
-    .modal .content {
-        background-color: white;
-        box-shadow: 1px 1px 1px 1px black;
-        width: 50%;
-        height: 10%;
-        margin: auto;
-        margin-top: 45%;
-    }
 
     .game {
         max-width: 1200px;
@@ -204,7 +181,6 @@
     }
 
     label {
-        color: aliceblue !important;
     }
 
     h1 {
@@ -212,6 +188,10 @@
     }
     .score , .next{
         text-align: center
+
+    }
+    .score{
+        margin-top: 20px;
     }
     .displayresult {
         color: #FF0000;

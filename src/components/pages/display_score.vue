@@ -5,7 +5,7 @@
             <h2>{{ result.score }}/20</h2>
             <p style="color: black">Voici la correction de tes erreurs:</p>
             <div v-for="answer in result.badAnswers" :key="answer.id" class="correction">
-                {{answer}}
+              <label v-html="answer"></label>
             </div>
             <p v-if="resultSaved">Result available to : {{uniqId}}</p>
         </div>

@@ -2,56 +2,16 @@
   <div>
     <header-main/>
     <div class="adminpanel">
-      <router-link to="createquiz" class="ui primary button">Creer un quiz</router-link>
+      <router-link to="createquiz" class="button-wikiquiz">Creer un quiz</router-link>
       <h2>Voici la list de vos quiz</h2>
       <span>Derniers résultats:</span>
       <div v-for="result in results" :key="result.id">
         <span>{{result.score}} ({{result.uniq_id}}) -> {{result.quiz_name}}</span>
       </div>
-      <form @submit="FindQuiz" method="GET">
-        <input v-model="toFind" name="value" type="text" placeholder="Search...">
-        <i class="circular search link icon"></i>
-      </form>
-      <div class="ui divided items">
-        <div class="item" v-for="quiz in quizs" :key="quiz.id">
-          <div class="image">
-            <img v-bind:src="'https://picsum.photos/200/300/?random=' + Math.floor(Math.random()*1000)">
-          </div>
-          <div class="content">
-            <button class="ui circular close icon button" @click="deleteQuiz(quiz.id)">
-              <i class="close icon"></i>
-            </button>
-            <a class="header">{{quiz.name}}</a>
-            <div class="meta">
-              <span class="cinema">{{quiz.questions.length}} questions</span>
-            </div>
-            <div class="description">
-              <p>{{quiz.description}}</p>
-            </div>
-            <div class="extra">
-              <div class="ui right floated primary button" @click="editquiz(quiz.id)">
-                Update
-                <i class="right chevron icon"></i>
-              </div>
+      <search_bar @FindQuiz="FindQuiz" />
 
-              <div class="ui label">
-                <i class="like icon">{{quiz.likes.length }}</i>
-              </div>
-
-              <div class="ui label">
-                <i class="thumbs down icon">{{quiz.dislikes.length }}</i>
-              </div>
-            </div>
-            <router-link :to="{name: 'quiz', params: {id: quiz.id}}" class="ui green basic button">
-              Run!
-              <i class="right chevron icon"></i>
-            </router-link>
-            <router-link :to="{name: 'result', params: {quizid: quiz.id}}" class="ui right floated brown basic button">
-              View results
-              <i class="right chevron icon"></i>
-            </router-link>
-          </div>
-        </div>
+      <div class="item-list">
+        <card_quiz_admin v-for="quiz in quizs" :key="quiz.id" :quiz="quiz"/>
       </div>
     </div>
   </div>
@@ -59,15 +19,16 @@
 
 <script>
   import HeaderMain from "../header_main";
+  import Search_bar from "../search_bar";
+  import Card_quiz_admin from "../card_quiz_admin";
   export default {
     name: "admin",
-    components: {HeaderMain},
+    components: {Card_quiz_admin, Search_bar, HeaderMain},
     data() {
       return {
         quizs: [],
         nextUrl: "",
         isSearch: false,
-        toFind: "",
         results: [],
         bottom: false,
       };
@@ -117,27 +78,18 @@
             }
           )
       },
-      editquiz(id) {
-        this.$router.push({name: "editquiz", params: {id: id}});
-      },
-      deleteQuiz(id) {
-        this.$api.deleteQuiz(id).then(
-          (resp) =>
-          { this.quizs = this.quizs.filter(quiz => quiz.id !== id)}
-        )
-      },
+
       FindQuiz(e) {
-        if (this.toFind === "") {
-          this.isSearch = true
+        if (e === "") {
+          this.isSearch = true;
           this.getQuizs();
           return;
         }
-        this.$api.findQuizInMine(this.toFind)
+        this.$api.findQuizInMine(e)
           .then(resp => {
             this.isSearch = false;
             this.quizs = resp
           });
-        e.preventDefault();
       }
 
     },
@@ -157,4 +109,8 @@
   .close {
     float: right;
   }
+  .item-list{
+
+  }
+
 </style>

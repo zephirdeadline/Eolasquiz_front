@@ -38,5 +38,18 @@ export default {
     color: blue !important;
   }
 
+  .button-wikiquiz {
+    border-radius: 20px;
+    background-color: #037aff;
+    color: white;
+    border: none;
+    font-size: x-large;
+    padding: 10px 20px;
+  }
+
+  .button-wikiquiz:hover {
+        background-color: #94caff;
+        cursor: pointer;
+    }
 
 </style>

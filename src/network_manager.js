@@ -5,7 +5,7 @@ import store from './store';
 class NetworkManager {
   constructor() {
     // Vue.store.getters.use;
-    this.baseApi = 'http://127.0.0.1:8000/';
+    this.baseApi = 'http://127.0.0.1:8001/';
 
     this.urlsApi = [
       {
@@ -123,6 +123,10 @@ class NetworkManager {
       {
         name: 'post_fullquiz',
         url: () => `${this.baseApi}api/fullquiz/`,
+      },
+      {
+        name: 'all_result',
+        url: id => `${this.baseApi}api/allresult/${id}`,
       },
     ];
   }
@@ -275,6 +279,10 @@ class NetworkManager {
 
   getMyResults() {
     return this.call(this.getUrl('get_my_results'), { headers: this.getHeader() });
+  }
+
+  allResult(id) {
+    return this.call(this.getUrl('all_result', id));
   }
 
   fullQuiz(data) {
