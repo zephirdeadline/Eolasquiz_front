@@ -67,4 +67,13 @@
   .fas {
     color: #2a292c;
   }
+  .fas:hover {
+    color: blue;
+  }
+  span {
+    cursor: pointer;
+  }
+  span:hover {
+    color: #007bff;
+  }
 </style>

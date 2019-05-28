@@ -7,7 +7,7 @@
 
       <search_bar class="search" @FindQuiz="FindQuiz" />
 
-        <loader_panel class="loader" :is_loading="is_loading" />
+      <loader_panel class="loader" :is_loading="is_loading" />
 
       <hr>
       <div
@@ -48,7 +48,7 @@
     watch: {
       bottom(bottom) {
 
-          console.log('scroll')
+        console.log('scroll')
         if (bottom && !this.isSearch) {
           this.loadMore();
         }
@@ -73,11 +73,11 @@
       loadMore() {
         if (this.nextUrl !== null) {
           this.$api.loadMore(this.nextUrl)
-            .then((resp) => {
-                this.quizs = this.quizs.concat(resp.results);
-                this.nextUrl = resp.next;
-              }
-            );
+                  .then((resp) => {
+                            this.quizs = this.quizs.concat(resp.results);
+                            this.nextUrl = resp.next;
+                          }
+                  );
         }
       },
       FindQuiz(e) {
@@ -89,20 +89,19 @@
           return;
         }
         this.$api.find(e)
-          .then(Response => Response.json())
-          .then((Response) => {
-            this.quizs = Response;
-            this.is_loading = false;
-          });
+                .then((Response) => {
+                  this.quizs = Response;
+                  this.is_loading = false;
+                });
       },
       getQuizs() {
         this.is_loading = true;
         this.$api.last()
-          .then((resp) => {
-            this.quizs = resp.results;
-            this.nextUrl = resp.next;
-            this.is_loading = false;
-          });
+                .then((resp) => {
+                  this.quizs = resp.results;
+                  this.nextUrl = resp.next;
+                  this.is_loading = false;
+                });
       },
     },
   };
@@ -110,6 +109,10 @@
 
 
 <style>
+
+  .input {
+    border: none;
+  }
   .content {
     /*justify-content: center;*/
   }

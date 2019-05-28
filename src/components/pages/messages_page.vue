@@ -22,10 +22,10 @@
         </div>
       <div class="new-message">
         <form @submit.prevent="sendMessage()">
-          <input v-model="newMessage.user_to" placeholder="to"/>
-          <input v-model="newMessage.subject" placeholder="Subject"/>
-          <textarea v-model="newMessage.content">Content</textarea>
-          <input type="submit"/>
+          <input  class="search-input" v-model="newMessage.user_to" placeholder="to"/>
+          <input  class="search-input" v-model="newMessage.subject" placeholder="Subject"/>
+          <textarea  class="search-input" v-model="newMessage.content">Content</textarea>
+          <input type="submit"  class="button-wikiquiz"/>
         </form>
       </div>
 

@@ -102,6 +102,10 @@
 </script>
 
 <style scoped>
+
+  .input {
+    border: none;
+  }
   .adminpanel {
     max-width: 600px;
     margin: auto;

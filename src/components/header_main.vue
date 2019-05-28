@@ -136,5 +136,6 @@ export default {
     transition: all 0.25s;
     background-color: #326bff;
     z-index: 10;
+    box-shadow: #5d5d5d 0 0 8px 2px;
   }
 </style>

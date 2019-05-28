@@ -70,7 +70,6 @@ border-width: 109px 0 109px 188.8px;
 border-color: transparent transparent transparent #007bff;
     }
     .item-content {
-        padding: 10px;
     }
     .item-panel:hover {
         background-color: #037aff;
@@ -91,9 +90,13 @@ border-color: transparent transparent transparent #007bff;
     }
     .left-panel {
         flex-direction: column;
+        box-shadow: #5d5d5d 0 0 5px 5px;
 
     }
     .content-center {
+        padding: 20px;
+    }
+    .item-panel {
         padding: 20px;
     }
 

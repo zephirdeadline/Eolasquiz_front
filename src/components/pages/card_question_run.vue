@@ -2,8 +2,8 @@
   <div class="current-question" :class="isVisible(question.id)">
 
     <div class="">
-      <label v-html="question.text"></label>
-
+      <label class="question" v-html="question.text"></label>
+      <div class="answer-group">
       <div v-for="answer in question.answers" :key="answer.id" class="answer">
         <div >
           <label>
@@ -13,6 +13,7 @@
           </label>
           </div>
       </div>
+        </div>
     </div>
   </div>
 </template>
@@ -37,6 +38,12 @@
     display: none;
   }
 
+  .question {
+    font-weight: bold;
+  }
+  .answer-group {
+    margin-top: 20px;
+  }
   .show {
     display: block;
   }

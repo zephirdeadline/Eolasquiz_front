@@ -1,9 +1,9 @@
 <template>
   <div>
     <form @submit.prevent="broadcast()">
-      quiz id <input v-model="quizToBroadcast.quiz" type="number">
-      to class id: <input v-model="quizToBroadcast.classe" type="number">
-      <input type="submit">
+      quiz id <input class="search-input" v-model="quizToBroadcast.quiz" type="number">
+      to class id: <input   class="search-input" v-model="quizToBroadcast.classe" type="number">
+      <input type="submit"  class="button-wikiquiz">
     </form>
     <div v-for="c in classes" :key="c.id">
       {{c.name}} {{c.id}}

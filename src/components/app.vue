@@ -4,6 +4,7 @@
     <div class="ui segment">
       <router-view />
     </div>
+    <footermain/>
   </div>
 </template>
 
@@ -12,11 +13,12 @@
 import Vue from 'vue';
 import Header_main from './header_main';
 import apiManager from '../network_manager';
+import Footermain from "./footermain";
 
 Vue.prototype.$api = new apiManager();
 
 export default {
-  components: { Header_main },
+  components: {Footermain, Header_main },
 
 };
 </script>
@@ -51,5 +53,10 @@ export default {
         background-color: #94caff;
         cursor: pointer;
     }
+  .search-input{
+    width: 200px;
+    border: 1px solid;
+    border-color: transparent transparent #037aff transparent ;
+  }
 
 </style>

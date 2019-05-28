@@ -37,12 +37,5 @@
   .fa-search{
     right: 0;
   }
-  .input {
-    border: none;
-  }
-  .search-input{
-    width: 200px;
-    border: 1px solid;
-    border-color: transparent transparent #037aff transparent ;
-  }
+
 </style>

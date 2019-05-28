@@ -45,5 +45,10 @@
 <style scoped>
 .fas {
     color: #2a292c;
+  cursor: pointer;
+  }
+
+  .fas:hover {
+    color: blue;
   }
 </style>

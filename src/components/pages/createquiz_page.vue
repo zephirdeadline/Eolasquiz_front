@@ -170,7 +170,7 @@ export default {
     margin-top: 20px;
     padding: 20px;
     border-radius: 25px;
-    background-color: #EEEEEE
+    background-color: #EEEEEE;
 }
 h1 {
     text-align: center

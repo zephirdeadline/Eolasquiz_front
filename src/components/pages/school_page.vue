@@ -1,23 +1,23 @@
 <template>
     <div>
         <header-main/>
-    <div class="school_page">
-        <div>add class
-            <add_class/>
+        <div class="school_page">
+            <div>add class
+                <add_class/>
+            </div>
+            <div>Add teacher</div>
+            <form @submit.prevent="addTeacher()">
+                <input class="search-input" type="text" v-model="email" placeholder="Email" />
+                <input class="button-wikiquiz" type="submit" />
+            </form>
+            <p>Liste des profs</p>
+            <ul>
+                <li v-for="teacher in teachers" :key="teacher.id">
+                    <span>{{teacher.username}}</span>
+                </li>
+            </ul>
         </div>
-        <div>Add teacher</div>
-        <form @submit.prevent="addTeacher()">
-            <input type="text" v-model="email" placeholder="Email" />
-            <input type="submit" />
-        </form>
-        <p>Liste des profs</p>
-        <ul>
-            <li v-for="teacher in teachers" :key="teacher.id">
-                <span>{{teacher.username}}</span>
-            </li>
-        </ul>
     </div>
-        </div>
 </template>
 
 <script>

@@ -20,6 +20,7 @@
             {{ quiz.description }}
           </div>
         </div>
+      <hr/>
         <div class="extra">
           <liker class="liker" :quiz="quiz" ></liker>
         </div>

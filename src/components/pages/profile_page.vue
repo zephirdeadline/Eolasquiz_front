@@ -1,11 +1,13 @@
 <template>
   <div class="content">
+    <header-main/>
     <form @submit="updateProfile">
       <label for="username">Username</label>
       <input
         v-model="user.username"
         type="text"
         name="username"
+        class="search-input"
       >
 
       <label for="email">Email</label>
@@ -13,8 +15,10 @@
         v-model="user.email"
         type="text"
         name="email"
+        class="search-input"
       >
-      <button type="submit">
+      <button type="submit"
+        class="button-wikiquiz">
         Send
       </button>
     </form>
@@ -24,15 +28,18 @@
       <input
         type="password"
         name="password"
+        class="search-input"
       >
 
       <label for="confirm_password">Confirm password</label>
       <input
         type="password"
         name="confirm_password"
+        class="search-input"
       >
 
-      <button type="submit">
+      <button type="submit"
+        class="button-wikiquiz">
         Send
       </button>
     </form>
@@ -42,10 +49,11 @@
 </template>
 
 <script>
-import Header_main from '../header_main';
+import HeaderMain from '../header_main';
 
 export default {
   name: 'ProfilePage',
+  components: {HeaderMain},
   data() {
     return {
       user: { username: '', email: '' },

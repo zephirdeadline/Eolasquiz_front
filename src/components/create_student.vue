@@ -1,9 +1,9 @@
 <template>
   <div>
     <form @submit.prevent="create_student()">
-      email student: <input v-model="email" type="text">
-      class: <input v-model="class_entity_id" type="number">
-      <input type="submit">
+      email student: <input  class="search-input" v-model="email" type="text">
+      class: <input  class="search-input" v-model="class_entity_id" type="number">
+      <input type="submit"  class="button-wikiquiz">
     </form>
 
   </div>

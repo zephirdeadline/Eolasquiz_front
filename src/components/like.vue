@@ -1,5 +1,5 @@
 <template>
-  <a>
+  <a class="link">
             <i
               class="like icon"
               @click="Like(quiz.id)"
@@ -38,5 +38,7 @@
 </script>
 
 <style scoped>
-
+    .link {
+        cursor: pointer;
+    }
 </style>

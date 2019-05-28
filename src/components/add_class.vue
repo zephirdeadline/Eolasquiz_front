@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="addClass()">
-                    <input type="text" v-model="class_name" placeholder="name">
-                    <input type="submit" />
+                    <input class="search-input" type="text" v-model="class_name" placeholder="name">
+                    <input class="button-wikiquiz" type="submit" />
                 </form>
 </template>
 

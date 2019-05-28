@@ -1,5 +1,5 @@
 <template>
-  <a>
+  <a class="link">
             <i
               class="thumbs down icon"
               @click="Dislike(quiz.id)"
@@ -45,4 +45,7 @@
 
 <style scoped>
 
+    .link {
+        cursor: pointer;
+    }
 </style>
